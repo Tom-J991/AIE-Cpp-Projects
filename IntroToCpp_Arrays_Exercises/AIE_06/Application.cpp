@@ -41,7 +41,7 @@ void Application::Load()
 	{
 		for (int x = 0; x < COLS; ++x)
 		{
-			int col = GetRandomValue(0, 4);
+			int col = rand() % 5;
 			m_tiles[y * COLS + x] = col;
 		}
 	}

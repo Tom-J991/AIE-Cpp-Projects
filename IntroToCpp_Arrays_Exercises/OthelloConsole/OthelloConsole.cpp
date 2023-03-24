@@ -69,7 +69,14 @@ int main(int argc, char** argv)
     ShouldBe(IsValidMove('W', 2, 0, state2), true);  // true
     ShouldBe(IsValidMove('W', 3, 1, state2), false); // false
 
+    std::cin.ignore();
+
     return 0;
+}
+
+bool IsInBounds(const int col, const int row, const int colSize, const int rowSize)
+{
+    return col >= 0 && col < colSize && row >= 0 && row < rowSize;
 }
 
 bool IsValidMove(char player, int col, int row, const OthelloBoardState& grid)
@@ -77,8 +84,48 @@ bool IsValidMove(char player, int col, int row, const OthelloBoardState& grid)
     // Task 1:
     // this method should return true if the 'player'
     // can be placed on the grid at the specified row/col location.
+    const int colSize = grid[0].size();
+    const int rowSize = grid.size();
+    std::vector<std::vector<int>> possiblePos(rowSize, std::vector<int>(colSize));
 
-    return false;
+    char opponent = ' ';
+    if (player == 'B')
+        opponent = 'W';
+    else if (player == 'W')
+        opponent = 'B';
+
+    // Iterate through grid
+    for (int i = 0; i < rowSize; ++i)
+    {
+        for (int j = 0; j < colSize; ++j)
+        {
+            if (grid[i][j] == ' ')
+                continue;
+
+            // Check eight directions
+            for (int x = std::max(col, 1) - 1; x < std::min(col + 2, colSize); ++x)
+            {
+                for (int y = std::max(row, 1) - 1; y < std::min(row + 2, rowSize); ++y)
+                {
+                    if (!IsInBounds(x, y, colSize, rowSize)) // Skip if out of bounds.
+                        continue;
+                    if (x == col && y == row) // Skip self
+                        continue;
+                }
+            }
+        }
+    }
+
+    for (int y = 0; y < rowSize; y++)
+    {
+        for (int x = 0; x < colSize; x++)
+        {
+            std::cout << possiblePos[y][x];
+        }
+        std::cout << std::endl;
+    }
+
+    return possiblePos[row][col] != 0;
 }
 
 OthelloBoardState MakeMove(char player, int col, int row, OthelloBoardState grid)

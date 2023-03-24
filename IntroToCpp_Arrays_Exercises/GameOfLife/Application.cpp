@@ -19,7 +19,7 @@ void Application::Run()
 {
 	InitWindow(m_windowWidth, m_windowHeight, "Game Of Life");
 
-	SetTargetFPS(60);
+	SetTargetFPS(30);
 	Load();
 
 	while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -103,6 +103,7 @@ void Application::Draw()
 	EndDrawing();
 }
 
+#include <iostream>
 int Application::CalculateTileState(int index, int* grid)
 {
 	// Calculate the row/col index
@@ -115,6 +116,34 @@ int Application::CalculateTileState(int index, int* grid)
 	// implement the rules for Conway’s game of life, the method should
 	// update the isAlive value based on the rules defined here:
 	// https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life 
+
+	int neighbours = 0;
+	// Find neighbours, 8 directions
+	for (int x = std::max(col, 1) - 1; x < std::min(col + 2, m_cols); ++x)
+	{
+		for (int y = std::max(row, 1) - 1; y < std::min(row + 2, m_rows); ++y)
+		{
+			if (x == col && y == row) // Skip self
+				continue;
+			neighbours += grid[y * m_cols + x] != 0;
+		}
+	}
+
+	//std::cout << "{ " << col << ", " << row << " } : " << neighbours << std::endl;
+
+	// Apply rules
+	if (isAlive)
+	{
+		if (neighbours < 2)
+			isAlive = false;
+		else if (neighbours > 3)
+			isAlive = false;
+	}
+	else
+	{
+		if (neighbours == 3)
+			isAlive = true;
+	}
 
 	return isAlive;
 }
