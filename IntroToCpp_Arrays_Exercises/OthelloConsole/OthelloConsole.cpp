@@ -86,7 +86,6 @@ bool IsValidMove(char player, int col, int row, const OthelloBoardState& grid)
     // can be placed on the grid at the specified row/col location.
     const int colSize = grid[0].size();
     const int rowSize = grid.size();
-    std::vector<std::vector<int>> possiblePos(rowSize, std::vector<int>(colSize));
 
     char opponent = ' ';
     if (player == 'B')
@@ -94,38 +93,23 @@ bool IsValidMove(char player, int col, int row, const OthelloBoardState& grid)
     else if (player == 'W')
         opponent = 'B';
 
-    // Iterate through grid
-    for (int i = 0; i < rowSize; ++i)
+    for (int x = std::max(col, 1) - 1; x < std::min(col + 2, colSize); ++x)
     {
-        for (int j = 0; j < colSize; ++j)
+        for (int y = std::max(row, 1) - 1; y < std::min(row + 2, rowSize); ++y)
         {
-            if (grid[i][j] == ' ')
+            if (!IsInBounds(x, y, colSize, rowSize)) // Out of bounds
+                continue;
+            if (x == col && y == row) // Skip self
+                continue;
+            if (grid[x][y] != ' ')
                 continue;
 
-            // Check eight directions
-            for (int x = std::max(col, 1) - 1; x < std::min(col + 2, colSize); ++x)
-            {
-                for (int y = std::max(row, 1) - 1; y < std::min(row + 2, rowSize); ++y)
-                {
-                    if (!IsInBounds(x, y, colSize, rowSize)) // Skip if out of bounds.
-                        continue;
-                    if (x == col && y == row) // Skip self
-                        continue;
-                }
-            }
+            if (grid[x][y] == player)
+                return true;
         }
     }
 
-    for (int y = 0; y < rowSize; y++)
-    {
-        for (int x = 0; x < colSize; x++)
-        {
-            std::cout << possiblePos[y][x];
-        }
-        std::cout << std::endl;
-    }
-
-    return possiblePos[row][col] != 0;
+    return false;
 }
 
 OthelloBoardState MakeMove(char player, int col, int row, OthelloBoardState grid)
