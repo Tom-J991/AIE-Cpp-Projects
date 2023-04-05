@@ -84,6 +84,8 @@ bool IsValidMove(char player, int col, int row, const OthelloBoardState& grid)
     // Task 1:
     // this method should return true if the 'player'
     // can be placed on the grid at the specified row/col location.
+    
+    // Attempted not completed.
     const int colSize = grid[0].size();
     const int rowSize = grid.size();
 
