@@ -1,25 +1,15 @@
 #include "Game.h"
 
-#include <iostream>
-#include "raylib.h"
-
-enum class eGameState
-{
-	MENU,
-	STATES_MAX
-};
+#include "MainMenu.h"
+#include "Games/Pong/PongGame.h"
 
 Game* Game::m_instance = nullptr;
 Game::Game()
 	: m_gameStateManager((int)eGameState::STATES_MAX)
 {
-	if (m_instance != nullptr) // Don't recreate itself if it already exists.
-	{
-		std::cout << "Game instance already exists!" << std::endl;
-		return;
-	}
-
 	m_gameStateManager.RegisterState((int)eGameState::MENU, new MainMenuState());
+	m_gameStateManager.RegisterState((int)eGameState::PONG, new PongGameState());
+
 	m_gameStateManager.PushState((int)eGameState::MENU);
 }
 Game::~Game()
@@ -32,4 +22,10 @@ void Game::Update(float deltaTime)
 void Game::Draw()
 {
 	m_gameStateManager.Draw();
+}
+
+void Game::ChangeState(eGameState state)
+{
+	m_gameStateManager.PopState(); 
+	m_gameStateManager.PushState((int)state);
 }
