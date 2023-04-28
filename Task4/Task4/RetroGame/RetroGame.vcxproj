@@ -141,7 +141,9 @@
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameStateManager.cpp" />
-    <ClCompile Include="src\Games\Pong\PongGame.cpp" />
+    <ClCompile Include="src\Games\Pong\pongBall.cpp" />
+    <ClCompile Include="src\Games\Pong\pongGame.cpp" />
+    <ClCompile Include="src\Games\Pong\pongPaddle.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
   </ItemGroup>
@@ -149,7 +151,9 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameState.h" />
     <ClInclude Include="src\GameStateManager.h" />
-    <ClInclude Include="src\Games\Pong\PongGame.h" />
+    <ClInclude Include="src\Games\Pong\pongBall.h" />
+    <ClInclude Include="src\Games\Pong\pongGame.h" />
+    <ClInclude Include="src\Games\Pong\pongPaddle.h" />
     <ClInclude Include="src\MainMenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

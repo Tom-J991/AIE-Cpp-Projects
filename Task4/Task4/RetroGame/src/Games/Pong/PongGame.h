@@ -1,35 +1,32 @@
 #pragma once
 
+#include <memory>
+
 #include "../../GameState.h"
+
+#include "pongBall.h"
+#include "pongPaddle.h"
 
 #include <raylib.h>
 
-class PongGameState : public GameState
+namespace Pong
 {
-public:
-	PongGameState();
-	virtual ~PongGameState();
+	class GameplayState : public GameState
+	{
+	public:
+		GameplayState();
+		virtual ~GameplayState();
 
-	virtual void OnEnter() override;
+		virtual void OnEnter() override;
 
-	virtual void Update(float deltaTime) override;
-	virtual void Draw() override;
+		virtual void Update(float deltaTime) override;
+		virtual void Draw() override;
 
-private:
-	bool CheckCollision(Vector2 paddlePos);
+	private:
+		std::unique_ptr<Ball> m_ball;
+		std::shared_ptr<Paddle> m_firstPlayer;
+		std::shared_ptr<Paddle> m_secondPlayer;
 
-private:
-	Vector2 firstPos;
-	Vector2 secondPos;
-	Vector2 paddleScale;
-	float firstScore, secondScore;
-	float moveSpeed;
+	};
 
-	Vector2 ballPos;
-	Vector2 ballDir;
-	Vector2 ballScale;
-	Vector2 ballSpeed;
-
-	Vector2 centreLineSize;
-
-};
+}

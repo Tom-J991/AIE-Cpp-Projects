@@ -27,7 +27,13 @@
     <ClCompile Include="src\GameStateManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Games\Pong\PongGame.cpp">
+    <ClCompile Include="src\Games\Pong\pongGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Games\Pong\pongPaddle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Games\Pong\pongBall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +50,13 @@
     <ClInclude Include="src\GameStateManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Games\Pong\PongGame.h">
+    <ClInclude Include="src\Games\Pong\pongGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Games\Pong\pongBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Games\Pong\pongPaddle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
