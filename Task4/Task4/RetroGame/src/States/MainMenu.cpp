@@ -26,13 +26,21 @@ MainMenuState::MainMenuState()
 }
 MainMenuState::~MainMenuState()
 { 
-	StopMusicStream(m_titleMusic);
 	if (IsMusicReady(m_titleMusic))
+	{
+		StopMusicStream(m_titleMusic);
 		UnloadMusicStream(m_titleMusic);
+	}
 }
 
 void MainMenuState::OnEnter()
 {
+	m_musicVolume = 1.0f;
+	SetMusicVolume(m_titleMusic, m_musicVolume);
+	if (!IsMusicStreamPlaying(m_titleMusic))
+		PlayMusicStream(m_titleMusic);
+
+	m_fadeOpacity = 0.0f;
 	m_isReturning = true;
 }
 void MainMenuState::OnExit()
@@ -69,6 +77,11 @@ void MainMenuState::Update(float deltaTime)
 		MenuTransition(m_transitionDest, deltaTime);
 		return;
 	}
+	if (m_isFading)
+	{
+		FadeTransition(m_transitionDest, deltaTime);
+		return;
+	}
 
 	// Options
 	int dir = (IsKeyPressed(KEY_DOWN)||IsKeyPressed(KEY_S)) - (IsKeyPressed(KEY_UP)||IsKeyPressed(KEY_W)); // Up or Down.
@@ -85,7 +98,8 @@ void MainMenuState::Update(float deltaTime)
 		{
 			case (int)eOptions::PONG:
 			{
-				Game::Get().ChangeState(eGameState::PONG);
+				m_isFading = true;
+				m_transitionDest = eGameState::PONG;
 			} break;
 			case (int)eOptions::OPTIONS:
 			{
@@ -143,6 +157,9 @@ void MainMenuState::Draw()
 		const char *miscText = u8"© Thomas Jackson (BadComoc), 2023";
 		int miscOff = miscFontSize + 16;
 		DrawText(miscText, (int)m_menuOffset + 16, GetScreenHeight() - miscOff, miscFontSize, WHITE);
+		// Fade
+		const Color fadeColor = Fade(BLACK, m_fadeOpacity);
+		DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), fadeColor);
 	}
 	EndDrawing();
 }
@@ -178,6 +195,27 @@ void MainMenuState::MenuTransition(const eGameState &state, float deltaTime)
 
 void MainMenuState::FadeTransition(const eGameState &state, float deltaTime)
 {
+	m_fadeOpacity = Lerp(m_fadeOpacity, 1.0f, 6.0f * deltaTime);
+	m_musicVolume = Lerp(m_musicVolume, 0.0f, 6.0f * deltaTime);
+	SetMusicVolume(m_titleMusic, m_musicVolume);
+	if (m_fadeOpacity >= 1.0f - 0.0012f)
+	{
+		m_fadeOpacity = 1.0f;
+		m_musicVolume = 0.0f;
+		SetMusicVolume(m_titleMusic, m_musicVolume);
+		m_isFading = false;
+		switch (state)
+		{
+			case eGameState::PONG:
+			{
+				if (IsMusicStreamPlaying(m_titleMusic))
+					StopMusicStream(m_titleMusic);
+				Game::Get().ChangeState(eGameState::PONG);
+			} break;
+			default:
+				break;
+		}
+	}
 }
 
 void Star::Init()

@@ -9,5 +9,5 @@ struct Star
 	float radius = 12;
 	float brightness = 1;
 
-	void Init();
+	inline void Init();
 };

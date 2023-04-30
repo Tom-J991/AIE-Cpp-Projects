@@ -47,9 +47,12 @@ private:
 
 	bool m_isTransition = false;
 	bool m_isReturning = false;
+	bool m_isFading = false;
 	eGameState m_transitionDest;
+
 	float m_menuOffset = 0;
 	float m_fadeOpacity = 0;
+	float m_musicVolume = 1.0f;
 
 	int m_particleCount = 1024;
 	std::vector<Star> m_particles;

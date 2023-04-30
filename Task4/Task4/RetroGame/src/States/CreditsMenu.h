@@ -46,7 +46,6 @@ private:
 	bool m_isReturning = false;
 	eGameState m_transitionDest;
 	float m_menuOffset = (float)-GetScreenWidth();
-	float m_fadeOpacity = 0;
 
 	Music m_titleMusic;
 

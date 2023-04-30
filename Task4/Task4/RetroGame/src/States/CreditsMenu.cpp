@@ -73,7 +73,7 @@ void CreditsMenuState::Update(float deltaTime)
 		m_scrollSpeed = 16;
 	m_scroll -= m_scrollSpeed * deltaTime;
 
-	const float end = m_credits.size() * fontSize;
+	const float end = (float)(m_credits.size() * fontSize);
 	if (m_scroll <= 0 - (end + (fontSize)))
 	{
 		m_menuOffset = (float)-GetScreenWidth();
