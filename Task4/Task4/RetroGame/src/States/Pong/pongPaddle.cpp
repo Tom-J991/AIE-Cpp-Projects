@@ -7,6 +7,7 @@ namespace Pong
 		, m_pos{ 0, 0 }
 		, m_size{ 0, 0 }
 		, m_speed{ 0, 0 }
+		, m_score{ 0 }
 	{ }
 	Paddle::~Paddle()
 	{ }
@@ -53,21 +54,7 @@ namespace Pong
 
 	void Paddle::Draw()
 	{
-		DrawRectangle(m_pos.x - (m_size.x / 2), m_pos.y - (m_size.y / 2), m_size.x, m_size.y, WHITE);
-	}
-
-	bool Paddle::CheckCollision(Ball &ball)
-	{
-		// AABB
-		const Vector2 adjustPPos = { m_pos.x - (m_size.x / 2), m_pos.y - (m_size.y / 2) };
-		const Vector2 adjustBPos = { ball.Position().x - (ball.Size().x / 2), ball.Size().y - (ball.Size().y / 2) };
-
-		bool collX = adjustPPos.x + m_size.x >= adjustBPos.x &&
-			adjustBPos.x + ball.Size().x >= adjustPPos.x;
-		bool collY = adjustPPos.y + m_size.y >= adjustBPos.y &&
-			adjustBPos.y + ball.Size().y >= adjustPPos.y;
-
-		return collX && collY;
+		DrawRectangle((int)(m_pos.x - (m_size.x / 2)), (int)(m_pos.y - (m_size.y / 2)), (int)m_size.x, (int)m_size.y, WHITE);
 	}
 
 }

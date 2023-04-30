@@ -5,7 +5,7 @@
 
 int main()
 {
-	InitWindow(640, 480, "Game");
+	InitWindow(800, 600, "Game");
 	SetTargetFPS(60);
 	SetExitKey(NULL);
 
@@ -21,6 +21,7 @@ int main()
 		game.Update(GetFrameTime());
 		game.Draw();
 	}
+	game.Destroy();
 
 	return 0;
 }

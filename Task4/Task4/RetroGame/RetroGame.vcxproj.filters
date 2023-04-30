@@ -21,19 +21,28 @@
     <ClCompile Include="src\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainMenu.cpp">
+    <ClCompile Include="src\States\MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GameStateManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Games\Pong\pongGame.cpp">
+    <ClCompile Include="src\States\Pong\pongGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Games\Pong\pongPaddle.cpp">
+    <ClCompile Include="src\States\Pong\pongPaddle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Games\Pong\pongBall.cpp">
+    <ClCompile Include="src\States\Pong\pongBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Options.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\States\OptionsMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\States\CreditsMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,19 +53,31 @@
     <ClInclude Include="src\GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MainMenu.h">
+    <ClInclude Include="src\States\MainMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameStateManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Games\Pong\pongGame.h">
+    <ClInclude Include="src\States\Pong\pongGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Games\Pong\pongBall.h">
+    <ClInclude Include="src\States\Pong\pongBall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Games\Pong\pongPaddle.h">
+    <ClInclude Include="src\States\Pong\pongPaddle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\States\OptionsMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\States\CreditsMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\States\StarParticle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Options.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

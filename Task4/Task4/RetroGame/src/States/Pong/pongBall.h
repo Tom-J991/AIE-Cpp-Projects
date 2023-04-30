@@ -1,6 +1,10 @@
 #pragma once
 
+#include <math.h>
+
 #include <raylib.h>
+
+#include "pongPaddle.h"
 
 namespace Pong
 {
@@ -14,6 +18,9 @@ namespace Pong
 
 		void Move(float deltaTime);
 		void Draw();
+
+		bool CheckBounds();
+		bool CheckCollision(Paddle &paddle);
 
 		Vector2 Position() const { return m_pos; }
 		void SetPosition(Vector2 pos) { m_pos = pos; }

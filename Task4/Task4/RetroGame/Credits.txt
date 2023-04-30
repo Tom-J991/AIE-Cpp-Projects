@@ -1,0 +1,22 @@
+Retro Games Gallery
+Copyright © 2023, Thomas Jackson (BadComoc)
+
+Software - 
+	Raylib
+	Copyright © 2013-2023, Ramon Santamaria (@raysan5)
+	- https://www.raylib.com/
+
+Sound Effects - 
+	Pong SFX, Thomas Jackson (BadComoc)
+
+Music - 
+	Stage 1, Juhani Junkala (SubspaceAudio), CC0
+	https://creativecommons.org/publicdomain/zero/1.0/
+	- https://opengameart.org/content/4-chiptunes-adventure
+
+Pong is a registered trademark of Atari Interactive Inc., 
+this game is a fan-made work and is not affiliated 
+in any way with Atari Interactive Inc.
+
+All product names, brands and logos are or may be trademarks of and 
+are used to identify products and services of, their respective owners.

@@ -5,8 +5,6 @@
 
 #include <raylib.h>
 
-#include "pongBall.h"
-
 namespace Pong
 {
 	enum class eControl
@@ -39,10 +37,10 @@ namespace Pong
 		void SetSpeed(Vector2 speed) { m_speed = speed; }
 		void SetSpeed(float x, float y) { m_speed = { x, y }; }
 
+		int Player() const { return m_player; }
+
 		int Score() const { return m_score; }
 		void SetScore(int score) { m_score = score; }
-
-		bool CheckCollision(Ball &ball);
 
 	private:
 		Vector2 m_pos;

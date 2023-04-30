@@ -10,6 +10,8 @@
 enum class eGameState
 {
 	MENU = 0,
+	OPTIONS,
+	CREDITS,
 	PONG,
 	STATES_MAX
 };
@@ -23,21 +25,32 @@ public:
 	void Update(float deltaTime);
 	void Draw();
 
-	void ChangeState(eGameState state);
-
 	void Quit() { m_quit = true; }
 	bool IsQuitting() const { return m_quit; }
 
-	int ActiveStateCount() const { return m_gameStateManager.ActiveStateCount(); }
+	void ChangeState(const eGameState &state);
+	void PushState(const eGameState &state);
+	void PopState();
 
-	inline static Game &Get() {
+	GameState *GetTopState() const { return m_gameStateManager->GetTopState(); }
+	int ActiveStateCount() const { return (int)m_gameStateManager->ActiveStateCount(); }
+	GameState *GetState(int id) const { return m_gameStateManager->GetState(id); }
+
+	static Game &Get() {
 		if (m_instance == nullptr) // Don't recreate itself if it already exists.
 			m_instance = new Game(); 
 		return *m_instance; 
 	};
 
+	static void Destroy()
+	{
+		if (m_instance != nullptr) // Don't try to delete if it doesn't exist.
+			delete m_instance;
+		m_instance = nullptr;
+	}
+
 private:
-	GameStateManager m_gameStateManager;
+	std::unique_ptr<GameStateManager> m_gameStateManager;
 	bool m_quit;
 
 private:

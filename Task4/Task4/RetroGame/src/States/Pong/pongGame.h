@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <memory>
 
 #include "../../GameState.h"
@@ -11,6 +12,14 @@
 
 namespace Pong
 {
+	enum class eSounds
+	{
+		BOUNDS = 0,
+		BOUNCE,
+		SCORE,
+		SOUNDS_MAX
+	};
+
 	class GameplayState : public GameState
 	{
 	public:
@@ -18,14 +27,20 @@ namespace Pong
 		virtual ~GameplayState();
 
 		virtual void OnEnter() override;
+		virtual void OnExit() override;
 
 		virtual void Update(float deltaTime) override;
 		virtual void Draw() override;
+		
+	private:
+		void PlaySFX(eSounds sound);
 
 	private:
 		std::unique_ptr<Ball> m_ball;
-		std::shared_ptr<Paddle> m_firstPlayer;
-		std::shared_ptr<Paddle> m_secondPlayer;
+		std::unique_ptr<Paddle> m_firstPlayer;
+		std::unique_ptr<Paddle> m_secondPlayer;
+
+		std::vector<Sound> m_loadedSounds;
 
 	};
 
