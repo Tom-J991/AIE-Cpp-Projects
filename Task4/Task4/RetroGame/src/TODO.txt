@@ -1,0 +1,24 @@
+TODO:
+Better menus.
+	- Menu classes inherit from template class?
+More options.
+	- Resolution?
+	- Custom Key mapping?
+Complete PONG.
+	- PONG title menu.
+	- One player vs AI mode.
+	- Better ball.
+More Games.
+	- Arkanoid?
+	- Snake?
+	- Asteroids?
+	- Space Invaders?
+	- Galaga/Galaxian?
+	- Frogger?
+	- Pac-Man?
+	- Bomberman?
+	- Dig Dug?
+	- Donkey Kong?
+	- Tetris?
+	- Mario-like Platformer?
+	- Minesweeper?

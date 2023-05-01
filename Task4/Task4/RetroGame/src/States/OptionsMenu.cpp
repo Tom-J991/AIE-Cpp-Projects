@@ -67,7 +67,6 @@ void OptionsMenuState::Update(float deltaTime)
 		Options::g_MasterVolume += 0.1f * dir;
 		Options::g_MasterVolume = Clamp(Options::g_MasterVolume, 0, 1);
 		SetMasterVolume(Options::g_MasterVolume);
-		Options::WriteOptions();
 	}
 
 	if (IsKeyReleased(KEY_ENTER))
@@ -81,6 +80,7 @@ void OptionsMenuState::Update(float deltaTime)
 			} break;
 			case (int)eOptions::BACK:
 			{
+				Options::WriteOptions();
 				m_isTransition = true;
 				m_transitionDest = eGameState::MENU;
 			} break;
