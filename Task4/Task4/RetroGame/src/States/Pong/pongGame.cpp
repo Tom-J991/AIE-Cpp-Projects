@@ -68,7 +68,7 @@ namespace Pong
 
 		// Exit.
 		if (IsKeyReleased(KEY_ESCAPE))
-			Game::Get().ChangeState(eGameState::MENU); // Go to menu.
+			Game::Get().ChangeState(eGameState::GAMELIST); // Go back.
 	}
 	void GameplayState::Draw()
 	{

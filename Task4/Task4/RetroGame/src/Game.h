@@ -10,6 +10,7 @@
 enum class eGameState
 {
 	MENU = 0,
+	GAMELIST,
 	OPTIONS,
 	CREDITS,
 	PONG,

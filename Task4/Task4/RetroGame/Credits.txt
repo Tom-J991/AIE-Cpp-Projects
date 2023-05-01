@@ -2,8 +2,7 @@ Retro Games Gallery
 Copyright © 2023, Thomas Jackson (BadComoc)
 
 Software - 
-	Raylib
-	Copyright © 2013-2023, Ramon Santamaria (@raysan5)
+	Raylib, Copyright © 2013-2023, Ramon Santamaria (@raysan5)
 	- https://www.raylib.com/
 
 Sound Effects - 

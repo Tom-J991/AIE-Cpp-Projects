@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include "States/MainMenu.h"
+#include "States/GamesListMenu.h"
 #include "States/OptionsMenu.h"
 #include "States/CreditsMenu.h"
 #include "States/Pong/pongGame.h"
@@ -22,6 +23,7 @@ Game::Game()
 
 	m_gameStateManager = std::make_unique<GameStateManager>((int)eGameState::STATES_MAX);
 	m_gameStateManager->RegisterState((int)eGameState::MENU, new MainMenuState());
+	m_gameStateManager->RegisterState((int)eGameState::GAMELIST, new GamesListMenuState());
 	m_gameStateManager->RegisterState((int)eGameState::OPTIONS, new OptionsMenuState());
 	m_gameStateManager->RegisterState((int)eGameState::CREDITS, new CreditsMenuState());
 	m_gameStateManager->RegisterState((int)eGameState::PONG, new Pong::GameplayState());

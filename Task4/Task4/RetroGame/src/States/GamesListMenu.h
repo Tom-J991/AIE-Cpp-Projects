@@ -13,18 +13,18 @@
 #include <raylib.h>
 #include <raymath.h>
 
-enum class eOptions
+enum class eGames
 {
-	MASTER_VOLUME = 0,
+	PONG = 0,
 	BACK,
-	OPTIONS_MAX
+	GAMES_MAX
 };
 
-class OptionsMenuState : public GameState
+class GamesListMenuState : public GameState
 {
 public:
-	OptionsMenuState();
-	virtual ~OptionsMenuState();
+	GamesListMenuState();
+	virtual ~GamesListMenuState();
 
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
@@ -37,18 +37,22 @@ public:
 
 private:
 	void MenuTransition(const eGameState &state, float deltaTime);
+	void FadeTransition(const eGameState &state, float deltaTime);
 
 private:
 	int m_index = 0;
-	std::map<eOptions, std::string> m_options;
-	std::map<eOptions, bool> m_optionsBold;
+	std::map<eGames, std::string> m_games;
 
 	std::vector<Star> m_particles;
 
 	bool m_isTransition = false;
 	bool m_isReturning = false;
+	bool m_isFading = false;
 	eGameState m_transitionDest;
+
 	float m_menuOffset = (float)-GetScreenWidth();
+	float m_fadeOpacity = 0;
+	float m_musicVolume = 1.0f;
 
 	Music m_titleMusic;
 

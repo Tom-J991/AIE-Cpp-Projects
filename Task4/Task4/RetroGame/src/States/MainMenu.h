@@ -13,13 +13,13 @@
 #include <raylib.h>
 #include <raymath.h>
 
-enum class eOptions
+enum class eMenu
 {
-	PONG = 0,
+	GAMELIST = 0,
 	OPTIONS,
 	CREDITS,
 	QUIT,
-	OPTIONS_MAX
+	MENU_MAX
 };
 
 class MainMenuState : public GameState
@@ -39,20 +39,16 @@ public:
 
 private:
 	void MenuTransition(const eGameState &state, float deltaTime);
-	void FadeTransition(const eGameState &state, float deltaTime);
 
 private:
 	int m_index = 0;
-	std::map<eOptions, std::string> m_options;
+	std::map<eMenu, std::string> m_menu;
 
 	bool m_isTransition = false;
 	bool m_isReturning = false;
-	bool m_isFading = false;
 	eGameState m_transitionDest;
 
 	float m_menuOffset = 0;
-	float m_fadeOpacity = 0;
-	float m_musicVolume = 1.0f;
 
 	int m_particleCount = 1024;
 	std::vector<Star> m_particles;

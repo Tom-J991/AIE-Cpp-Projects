@@ -215,6 +215,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\States\GamesListMenu.cpp" />
     <ClCompile Include="src\Options.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameStateManager.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="src\GameStateManager.h" />
     <ClInclude Include="src\Options.h" />
     <ClInclude Include="src\States\CreditsMenu.h" />
+    <ClInclude Include="src\States\GamesListMenu.h" />
     <ClInclude Include="src\States\OptionsMenu.h" />
     <ClInclude Include="src\States\Pong\pongBall.h" />
     <ClInclude Include="src\States\Pong\pongGame.h" />
