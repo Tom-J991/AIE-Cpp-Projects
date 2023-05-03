@@ -1,13 +1,13 @@
 TODO:
 Better menus.
 	- Menu classes inherit from template class?
+	- Vector pointers rather than copying.
 More options.
 	- Resolution?
 	- Custom Key mapping?
 Complete PONG.
 	- PONG title menu.
 	- One player vs AI mode.
-	- Better ball.
 More Games.
 	- Arkanoid?
 	- Snake?

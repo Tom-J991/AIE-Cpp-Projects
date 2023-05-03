@@ -1,5 +1,9 @@
 #include "pongBall.h"
 
+template <typename T> int sgn(T val) { // Sign function. Returns -1 for negative numbers or 1 for positive numbers.
+	return (T(0) < val) - (val < T(0));
+}
+
 #include <iostream>
 namespace Pong
 {
@@ -7,7 +11,7 @@ namespace Pong
 		: m_pos{ 0, 0 }
 		, m_vel{ 0, 0 }
 		, m_size{ 0, 0 }
-		, m_speed{ 0, 0 }
+		, m_speed{ 0 }
 	{ }
 	Ball::~Ball()
 	{ }
@@ -17,14 +21,18 @@ namespace Pong
 		m_pos = { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2 };
 		m_vel = { -1, -1 };
 		m_size = { 10, 10 };
-		m_speed = { 64, 256 };
+		m_speed = 256;
+
+		float angle = CalculateStartingAngle();
+		m_vel.x = m_speed * cosf(angle);
+		m_vel.y = m_speed * sinf(angle);
 	}
 
 	void Ball::Move(float deltaTime)
 	{
 		// Move.
-		m_pos.x += m_vel.x * m_speed.x * deltaTime;
-		m_pos.y += m_vel.y * m_speed.y * deltaTime;
+		m_pos.x += m_vel.x * deltaTime;
+		m_pos.y += m_vel.y * deltaTime;
 	}
 
 	void Ball::Draw()
@@ -32,54 +40,79 @@ namespace Pong
 		DrawRectangle((int)(m_pos.x - (m_size.x / 2)), (int)(m_pos.y - (m_size.y / 2)), (int)m_size.x, (int)m_size.y, WHITE);
 	}
 
-	bool Ball::CheckBounds()
+	bool Ball::CheckBounds(float deltaTime)
 	{
 		if (m_pos.y < 0 || m_pos.y > GetScreenHeight()) // Flip y direction if hit ceiling or floor.
 		{
 			m_vel.y *= -1;
 			return true;
 		}
-
 		return false;
 	}
 
-	bool Ball::CheckCollision(Paddle &paddle)
+	bool Ball::CheckCollision(Paddle &paddle, float deltaTime)
 	{
-		if (paddle.Player() < 1 || paddle.Player() > 2) // Paddle is neither player 1 or 2.
-			return false;
-
-		if (paddle.Player() == 1) // Check Left Paddle
+		bool collided = false;
+		// X Axis
+		if (AABB({m_pos.x + m_vel.x * deltaTime, m_pos.y}, m_size, paddle))
 		{
-			if (m_pos.y - (m_size.y / 2) < paddle.Position().y + (paddle.Size().y / 2) &&
-				m_pos.y + (m_size.y / 2) > paddle.Position().y - (paddle.Size().y / 2) &&
-				m_pos.x - (m_size.x / 2) < paddle.Position().x + (paddle.Size().x / 2))
-			{
-				if (m_pos.x > paddle.Position().x)
-				{
-					m_vel.x *= -1;
-					m_vel.y *= -1;
-
-					return true;
-				}
-			}
+			while (!AABB({m_pos.x + sgn(m_vel.x) * deltaTime, m_pos.y}, m_size, paddle))
+				m_pos.x += sgn(m_vel.x) * deltaTime; // Push back out
+			collided = true;
 		}
-		if (paddle.Player() == 2) // Check Left Paddle
+		// Y Axis
+		if (AABB({ m_pos.x, m_pos.y + m_vel.y * deltaTime }, m_size, paddle))
 		{
-			if (m_pos.y - (m_size.y / 2) < paddle.Position().y + (paddle.Size().y / 2) &&
-				m_pos.y + (m_size.y / 2) > paddle.Position().y - (paddle.Size().y / 2) &&
-				m_pos.x + (m_size.x / 2) > paddle.Position().x - (paddle.Size().x / 2))
-			{
-				if (m_pos.x < paddle.Position().x)
-				{
-					m_vel.x *= -1;
-					m_vel.y *= -1;
-
-					return true;
-				}
-			}
+			while (!AABB({ m_pos.x, m_pos.y + sgn(m_vel.y) * deltaTime }, m_size, paddle))
+				m_pos.y += sgn(m_vel.y) * deltaTime; // Push back out
+			collided = true;
 		}
 
-		return false;
+		if (collided)
+		{
+			// Calculate bounce angle
+			float intersectY = paddle.Position().y - m_pos.y; // How far from the middle of the paddle did the ball hit?
+			float normalizedIntersect = intersectY / (paddle.Size().y/2); // -1 <-> 1
+			float bounceAngle = normalizedIntersect * (45 * DEG2RAD);
+			m_speed = 128 + abs(normalizedIntersect) * 128;
+			
+			if (paddle.Player() == 1)
+			{
+				m_vel.x = m_speed * cosf(bounceAngle);
+				m_vel.y = m_speed * -sinf(bounceAngle);
+			}
+			else if (paddle.Player() == 2)
+			{
+				m_vel.x = m_speed * -cosf(bounceAngle);
+				m_vel.y = m_speed * sinf(bounceAngle);
+			}
+
+			/*std::cout << intersectY << std::endl;
+			std::cout << normalizedIntersect << std::endl;
+			std::cout << bounceAngle * RAD2DEG << std::endl;
+			std::cout << m_speed << std::endl;
+			std::cout << std::endl;*/
+		}
+
+		return collided;
+	}
+
+	bool Ball::AABB(Vector2 pos, Vector2 size, Paddle &paddle)
+	{
+		bool collX = pos.x - (size.x/2) <= paddle.Position().x + (paddle.Size().x/2) &&
+					pos.x + (size.x/2) >= paddle.Position().x - (paddle.Size().x/2);
+		bool collY = pos.y - (size.y/2) <= paddle.Position().y + (paddle.Size().y/2) &&
+					pos.y + (size.y/2) >= paddle.Position().y - (paddle.Size().y/2);
+		return collX && collY;
+	}
+
+	float Ball::CalculateStartingAngle()
+	{
+		float angle = GetRandomValue(0, (360 * DEG2RAD));
+		if (angle == 0 || angle == (90 * DEG2RAD) || angle == (180 * DEG2RAD) || angle == (270 * DEG2RAD) || angle == (360 * DEG2RAD))
+			return CalculateStartingAngle();
+		//float angle = (PI);
+		return angle;
 	}
 
 }

@@ -9,6 +9,7 @@
 #include "pongPaddle.h"
 
 #include <raylib.h>
+#include <raymath.h>
 
 namespace Pong
 {

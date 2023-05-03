@@ -41,9 +41,9 @@ namespace Pong
 	void GameplayState::Update(float deltaTime)
 	{
 		// Move.
-		if (m_ball->CheckCollision(*m_firstPlayer.get()) || m_ball->CheckCollision(*m_secondPlayer.get()))
+		if (m_ball->CheckCollision(*m_firstPlayer.get(), deltaTime) || m_ball->CheckCollision(*m_secondPlayer.get(), deltaTime))
 			PlaySFX(eSounds::BOUNCE);
-		if (m_ball->CheckBounds())
+		if (m_ball->CheckBounds(deltaTime))
 			PlaySFX(eSounds::BOUNDS);
 
 		m_ball->Move(deltaTime);
@@ -59,9 +59,7 @@ namespace Pong
 		// Reset ball when out of bounds.
 		if (m_ball->Position().x > GetScreenWidth() || m_ball->Position().x < 0)
 		{
-			Vector2 tmp = m_ball->Velocity();
 			m_ball->Init();
-			m_ball->SetVelocity({ tmp.x * -1, tmp.y * -1 });
 
 			PlaySFX(eSounds::SCORE);
 		}
@@ -88,8 +86,11 @@ namespace Pong
 			m_ball->Draw();
 
 			// Scores.
-			DrawText(std::to_string((int)m_firstPlayer->Score()).c_str(), GetScreenWidth() / 4, GetScreenHeight() / 5, 48, WHITE);
-			DrawText(std::to_string((int)m_secondPlayer->Score()).c_str(), (int)(GetScreenWidth() / 1.5f), GetScreenHeight() / 5, 48, WHITE);
+			const int screenHalf = GetScreenWidth() / 2;
+			const int leftHalf = screenHalf / 2;
+			const int rightHalf = screenHalf + leftHalf;
+			DrawText(std::to_string((int)m_firstPlayer->Score()).c_str(), leftHalf, GetScreenHeight() / 5, 48, WHITE);
+			DrawText(std::to_string((int)m_secondPlayer->Score()).c_str(), rightHalf, GetScreenHeight() / 5, 48, WHITE);
 
 		}
 		EndDrawing();

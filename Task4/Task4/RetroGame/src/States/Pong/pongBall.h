@@ -1,8 +1,7 @@
 #pragma once
 
-#include <math.h>
-
 #include <raylib.h>
+#include <raymath.h>
 
 #include "pongPaddle.h"
 
@@ -19,8 +18,8 @@ namespace Pong
 		void Move(float deltaTime);
 		void Draw();
 
-		bool CheckBounds();
-		bool CheckCollision(Paddle &paddle);
+		bool CheckBounds(float deltaTime);
+		bool CheckCollision(Paddle &paddle, float deltaTime);
 
 		Vector2 Position() const { return m_pos; }
 		void SetPosition(Vector2 pos) { m_pos = pos; }
@@ -34,15 +33,18 @@ namespace Pong
 		void SetSize(Vector2 size) { m_size = size; }
 		void SetSize(float x, float y) { m_size = { x, y }; }
 
-		Vector2 Speed() const { return m_speed; }
-		void SetSpeed(Vector2 speed) { m_speed = speed; }
-		void SetSpeed(float x, float y) { m_speed = { x, y }; }
+		float Speed() const { return m_speed; }
+		void SetSpeed(float speed) { m_speed = speed; }
+
+	private:
+		bool AABB(Vector2 pos, Vector2 size, Paddle &paddle);
+		float CalculateStartingAngle();
 
 	private:
 		Vector2 m_pos;
 		Vector2 m_vel;
 		Vector2 m_size;
-		Vector2 m_speed;
+		float m_speed;
 
 	};
 
