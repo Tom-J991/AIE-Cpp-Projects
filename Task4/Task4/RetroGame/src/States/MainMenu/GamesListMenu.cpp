@@ -142,8 +142,8 @@ void GamesListMenuState::MenuTransition(const eGameState &state, float deltaTime
 			case eGameState::MENU:
 			{
 				auto *state = (MainMenuState *)(Game::Get().GetState((int)eGameState::MENU));
-				state->SetParticles(m_particles);
-				state->SetMusic(m_titleMusic);
+				state->PassParticles(&m_particles);
+				state->PassMusic(&m_titleMusic);
 				Game::Get().ChangeState(eGameState::MENU);
 			} break;
 			default:

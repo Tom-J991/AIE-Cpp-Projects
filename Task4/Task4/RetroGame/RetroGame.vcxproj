@@ -215,30 +215,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\States\GamesListMenu.cpp" />
+    <ClCompile Include="src\States\MainMenu\GamesListMenu.cpp" />
     <ClCompile Include="src\Options.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameStateManager.cpp" />
-    <ClCompile Include="src\States\CreditsMenu.cpp" />
-    <ClCompile Include="src\States\OptionsMenu.cpp" />
+    <ClCompile Include="src\States\MainMenu\CreditsMenu.cpp" />
+    <ClCompile Include="src\States\MainMenu\OptionsMenu.cpp" />
+    <ClCompile Include="src\States\Menu.cpp" />
     <ClCompile Include="src\States\Pong\pongBall.cpp" />
     <ClCompile Include="src\States\Pong\pongGame.cpp" />
     <ClCompile Include="src\States\Pong\pongPaddle.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\States\MainMenu.cpp" />
+    <ClCompile Include="src\States\MainMenu\MainMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameState.h" />
     <ClInclude Include="src\GameStateManager.h" />
     <ClInclude Include="src\Options.h" />
-    <ClInclude Include="src\States\CreditsMenu.h" />
-    <ClInclude Include="src\States\GamesListMenu.h" />
-    <ClInclude Include="src\States\OptionsMenu.h" />
+    <ClInclude Include="src\States\MainMenu\CreditsMenu.h" />
+    <ClInclude Include="src\States\MainMenu\GamesListMenu.h" />
+    <ClInclude Include="src\States\Menu.h" />
+    <ClInclude Include="src\States\MainMenu\OptionsMenu.h" />
     <ClInclude Include="src\States\Pong\pongBall.h" />
     <ClInclude Include="src\States\Pong\pongGame.h" />
     <ClInclude Include="src\States\Pong\pongPaddle.h" />
-    <ClInclude Include="src\States\MainMenu.h" />
+    <ClInclude Include="src\States\MainMenu\MainMenu.h" />
     <ClInclude Include="src\States\StarParticle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

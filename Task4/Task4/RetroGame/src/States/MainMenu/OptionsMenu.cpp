@@ -11,6 +11,7 @@ namespace Options
 
 OptionsMenuState::OptionsMenuState()
 { 
+	MenuState::MenuState();
 	m_options.insert(std::pair<eOptions, std::string>(eOptions::MASTER_VOLUME, "Master Volume: "));
 	m_options.insert(std::pair<eOptions, std::string>(eOptions::BACK, "Go Back"));
 
@@ -18,47 +19,23 @@ OptionsMenuState::OptionsMenuState()
 	m_optionsBold.insert(std::pair<eOptions, bool>(eOptions::BACK, false));
 }
 OptionsMenuState::~OptionsMenuState()
-{ }
+{ 
+	MenuState::~MenuState();
+}
 
 void OptionsMenuState::OnEnter()
 {
-	m_isReturning = true;
+	MenuState::OnEnter();
 }
 void OptionsMenuState::OnExit()
 {
+	MenuState::OnEnter();
 }
 
 bool changeVolume = false;
 void OptionsMenuState::Update(float deltaTime)
 {
-	if (IsMusicReady(m_titleMusic))
-		UpdateMusicStream(m_titleMusic);
-
-	// Background Particles
-	for (Star &star : m_particles)
-	{
-		if (star.position.x > GetScreenWidth())
-			star.Init();
-
-		star.position.x += star.speed * deltaTime;
-	}
-
-	// Transition
-	if (m_isReturning)
-	{
-		m_menuOffset = Lerp(m_menuOffset, 0.0f, 8.0f * deltaTime);
-		if (m_menuOffset >= -1.0f)
-		{
-			m_menuOffset = 0.0f;
-			m_isReturning = false;
-		}
-		return;
-	}
-	if (m_isTransition)
-	{
-		MenuTransition(m_transitionDest, deltaTime);
-		return;
-	}
+	MenuState::Update(deltaTime);
 
 	// Options
 	if (changeVolume)
@@ -110,12 +87,7 @@ void OptionsMenuState::Draw()
 	BeginDrawing();
 	ClearBackground(BLACK);
 	{
-		// Background Particles
-		for (const Star &star : m_particles)
-		{
-			const Color c = ColorFromHSV(0, 0, star.brightness);
-			DrawRectangle((int)star.position.x, (int)star.position.y, (int)star.radius, (int)star.radius, c);
-		}
+		MenuState::DrawParticles();
 		// Options
 		for (int i = 0; i < (int)eOptions::OPTIONS_MAX; i++)
 		{
@@ -146,22 +118,17 @@ void OptionsMenuState::Draw()
 
 void OptionsMenuState::MenuTransition(const eGameState &state, float deltaTime)
 {
-	m_menuOffset = Lerp(m_menuOffset, (float)-GetScreenWidth(), 6.0f * deltaTime);
-	if (m_menuOffset <= -GetScreenWidth() + 12.0f)
+	MenuState::MenuTransition(state, deltaTime);
+	switch (state)
 	{
-		m_menuOffset = (float)-GetScreenWidth();
-		m_isTransition = false;
-		switch (state)
+		case eGameState::MENU:
 		{
-			case eGameState::MENU:
-			{
-				auto *state = (MainMenuState*)(Game::Get().GetState((int)eGameState::MENU));
-				state->SetParticles(m_particles);
-				state->SetMusic(m_titleMusic);
-				Game::Get().ChangeState(eGameState::MENU);
-			} break;
-			default:
-				break;
-		}
+			auto *state = (MainMenuState*)(Game::Get().GetState((int)eGameState::MENU));
+			state->PassParticles(m_particles);
+			state->PassMusic(m_titleMusic);
+			Game::Get().ChangeState(eGameState::MENU);
+		} break;
+		default:
+			break;
 	}
 }

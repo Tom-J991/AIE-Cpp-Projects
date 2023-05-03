@@ -17,7 +17,7 @@ namespace Pong
 		if (m_player < 1 || m_player > 2) // Is neither player 1 or 2.
 			return;
 
-		m_size = { 16, 64 };
+		m_size = { 12, 96 };
 		m_speed.y = 256;
 
 		m_score = 0;

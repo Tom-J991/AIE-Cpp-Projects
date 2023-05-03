@@ -41,6 +41,8 @@ namespace Pong
 		std::unique_ptr<Paddle> m_firstPlayer;
 		std::unique_ptr<Paddle> m_secondPlayer;
 
+		bool m_aiPlayer;
+
 		std::vector<Sound> m_loadedSounds;
 
 	};

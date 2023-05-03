@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../Game.h"
-#include "../GameState.h"
+#include "../../Game.h"
+#include "../../GameState.h"
 
-#include "StarParticle.h"
+#include "../StarParticle.h"
 
 #include <vector>
 #include <string>

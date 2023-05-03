@@ -1,9 +1,9 @@
 #include "Game.h"
 
-#include "States/MainMenu.h"
-#include "States/GamesListMenu.h"
-#include "States/OptionsMenu.h"
-#include "States/CreditsMenu.h"
+#include "States/MainMenu/MainMenu.h"
+#include "States/MainMenu/GamesListMenu.h"
+#include "States/MainMenu/OptionsMenu.h"
+#include "States/MainMenu/CreditsMenu.h"
 #include "States/Pong/pongGame.h"
 
 // Globals.

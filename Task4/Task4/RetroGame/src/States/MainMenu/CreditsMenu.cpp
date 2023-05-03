@@ -117,8 +117,8 @@ void CreditsMenuState::SerializeCreditsText()
 void CreditsMenuState::GoBack()
 {
 	auto *state = (MainMenuState *)(Game::Get().GetState((int)eGameState::MENU));
-	state->SetParticles(m_particles);
-	state->SetMusic(m_titleMusic);
+	state->PassParticles(&m_particles);
+	state->PassMusic(&m_titleMusic);
 	Game::Get().ChangeState(eGameState::MENU);
 }
 

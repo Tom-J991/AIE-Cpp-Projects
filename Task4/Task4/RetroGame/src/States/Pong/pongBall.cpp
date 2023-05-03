@@ -67,31 +67,25 @@ namespace Pong
 				m_pos.y += sgn(m_vel.y) * deltaTime; // Push back out
 			collided = true;
 		}
-
+		// Bounce
 		if (collided)
 		{
 			// Calculate bounce angle
 			float intersectY = paddle.Position().y - m_pos.y; // How far from the middle of the paddle did the ball hit?
 			float normalizedIntersect = intersectY / (paddle.Size().y/2); // -1 <-> 1
 			float bounceAngle = normalizedIntersect * (45 * DEG2RAD);
-			m_speed = 128 + abs(normalizedIntersect) * 128;
+			m_speed = 128 + abs(normalizedIntersect) * 256; // 128 min speed, (128+256) 384 max speed
 			
-			if (paddle.Player() == 1)
+			if (paddle.Player() == 1) // Left Paddle
 			{
 				m_vel.x = m_speed * cosf(bounceAngle);
 				m_vel.y = m_speed * -sinf(bounceAngle);
 			}
-			else if (paddle.Player() == 2)
+			else if (paddle.Player() == 2) // Right Paddle
 			{
 				m_vel.x = m_speed * -cosf(bounceAngle);
 				m_vel.y = m_speed * sinf(bounceAngle);
 			}
-
-			/*std::cout << intersectY << std::endl;
-			std::cout << normalizedIntersect << std::endl;
-			std::cout << bounceAngle * RAD2DEG << std::endl;
-			std::cout << m_speed << std::endl;
-			std::cout << std::endl;*/
 		}
 
 		return collided;
