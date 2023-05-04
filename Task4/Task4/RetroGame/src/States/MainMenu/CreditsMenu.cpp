@@ -2,10 +2,13 @@
 
 #include "MainMenu.h"
 
+#include <fstream>
 #include <iostream>
 
 CreditsMenuState::CreditsMenuState()
 { 
+	MenuState::MenuState();
+
 	std::ifstream creditsFile("./Credits.txt");
 	if (!creditsFile.is_open())
 	{
@@ -23,48 +26,26 @@ CreditsMenuState::CreditsMenuState()
 	SerializeCreditsText();
 }
 CreditsMenuState::~CreditsMenuState()
-{ }
+{ 
+	MenuState::~MenuState();
+}
 
 void CreditsMenuState::OnEnter()
 {
+	MenuState::OnEnter();
+
 	m_scroll = (float)GetScreenHeight() / 2;
-	m_isReturning = true;
 }
 void CreditsMenuState::OnExit()
 {
+	MenuState::OnExit();
 }
 
 const int fontSize = 20;
-void CreditsMenuState::Update(float deltaTime)
+bool CreditsMenuState::Update(float deltaTime)
 {
-	if (IsMusicReady(m_titleMusic))
-		UpdateMusicStream(m_titleMusic);
-
-	// Background Particles
-	for (Star &star : m_particles)
-	{
-		if (star.position.x > GetScreenWidth())
-			star.Init();
-
-		star.position.x += star.speed * deltaTime;
-	}
-
-	// Transition
-	if (m_isReturning)
-	{
-		m_menuOffset = Lerp(m_menuOffset, 0.0f, 8.0f * deltaTime);
-		if (m_menuOffset >= -1.0f)
-		{
-			m_menuOffset = 0.0f;
-			m_isReturning = false;
-		}
-		return;
-	}
-	if (m_isTransition)
-	{
-		MenuTransition(m_transitionDest, deltaTime);
-		return;
-	}
+	if (!MenuState::Update(deltaTime))
+		return false;
 
 	// Scrolling
 	if (IsKeyDown(KEY_ENTER))
@@ -85,18 +66,15 @@ void CreditsMenuState::Update(float deltaTime)
 		m_isTransition = true;
 		m_transitionDest = eGameState::MENU;
 	}
+
+	return true;
 }
 void CreditsMenuState::Draw()
 {
 	BeginDrawing();
 	ClearBackground(BLACK);
 	{
-		// Background Particles
-		for (const Star &star : m_particles)
-		{
-			const Color c = ColorFromHSV(0, 0, star.brightness);
-			DrawRectangle((int)star.position.x, (int)star.position.y, (int)star.radius, (int)star.radius, c);
-		}
+		MenuState::DrawParticles();
 		// Draw Credits
 		for (int i = 0; i < m_credits.size(); i++)
 		{
@@ -117,18 +95,15 @@ void CreditsMenuState::SerializeCreditsText()
 void CreditsMenuState::GoBack()
 {
 	auto *state = (MainMenuState *)(Game::Get().GetState((int)eGameState::MENU));
-	state->PassParticles(&m_particles);
-	state->PassMusic(&m_titleMusic);
+	state->PassParticles(m_particles);
+	state->PassMusic(m_titleMusic);
 	Game::Get().ChangeState(eGameState::MENU);
 }
 
-void CreditsMenuState::MenuTransition(const eGameState &state, float deltaTime)
+bool CreditsMenuState::MenuTransition(const eGameState &state, float deltaTime)
 {
-	m_menuOffset = Lerp(m_menuOffset, (float)-GetScreenWidth(), 6.0f * deltaTime);
-	if (m_menuOffset <= -GetScreenWidth() + 12.0f)
+	if (MenuState::MenuTransition(state, deltaTime))
 	{
-		m_menuOffset = (float)-GetScreenWidth();
-		m_isTransition = false;
 		switch (state)
 		{
 			case eGameState::MENU:
@@ -139,4 +114,5 @@ void CreditsMenuState::MenuTransition(const eGameState &state, float deltaTime)
 				break;
 		}
 	}
+	return true;
 }

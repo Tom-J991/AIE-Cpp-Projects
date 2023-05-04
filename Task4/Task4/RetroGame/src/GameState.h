@@ -10,7 +10,7 @@ public:
 	bool IsActive() const { return m_active; }
 
 protected:
-	virtual void Update(float deltaTime) = 0;
+	virtual bool Update(float deltaTime) = 0;
 	virtual void Draw() = 0;
 
 	void Enter() { m_active = true; OnEnter(); }

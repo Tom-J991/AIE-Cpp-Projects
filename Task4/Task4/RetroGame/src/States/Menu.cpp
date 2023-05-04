@@ -20,7 +20,7 @@ void MenuState::OnExit()
 {
 }
 
-void MenuState::Update(float deltaTime)
+bool MenuState::Update(float deltaTime)
 {
 	if (IsMusicReady(*m_titleMusic))
 		UpdateMusicStream(*m_titleMusic);
@@ -38,24 +38,26 @@ void MenuState::Update(float deltaTime)
 	if (m_isReturning)
 	{
 		m_menuOffset = Lerp(m_menuOffset, 0.0f, 8.0f * deltaTime);
-		if (m_menuOffset >= -1.0f)
+		if (m_menuOffset <= 1.0f)
 		{
 			m_menuOffset = 0.0f;
 			m_isReturning = false;
 		}
-		return;
+		return false;
 	}
 
 	if (m_isTransition)
 	{
 		MenuTransition(m_transitionDest, deltaTime);
-		return;
+		return false;
 	}
 	else if (m_isFading)
 	{
 		FadeTransition(m_transitionDest, deltaTime);
-		return;
+		return false;
 	}
+
+	return true;
 }
 void MenuState::Draw()
 {
@@ -69,27 +71,31 @@ void MenuState::Draw()
 	EndDrawing();
 }
 
-void MenuState::MenuTransition(const eGameState &state, float deltaTime)
+bool MenuState::MenuTransition(const eGameState &state, float deltaTime)
 {
-	m_menuOffset = Lerp(m_menuOffset, (float)-GetScreenWidth(), 6.0f * deltaTime);
-	if (m_menuOffset >= -GetScreenWidth() + 12.0f)
-		return;
+	m_menuOffset = Lerp(m_menuOffset, (float)GetScreenWidth(), 6.0f * deltaTime);
+	if (m_menuOffset < GetScreenWidth() - 1.0f)
+		return false;
 
-	m_menuOffset = (float)-GetScreenWidth();
+	m_menuOffset = (float)GetScreenWidth();
 	m_isTransition = false;
+
+	return true;
 }
-void MenuState::FadeTransition(const eGameState &state, float deltaTime)
+bool MenuState::FadeTransition(const eGameState &state, float deltaTime)
 {
 	m_fadeOpacity = Lerp(m_fadeOpacity, 1.0f, 6.0f * deltaTime);
 	m_musicVolume = Lerp(m_musicVolume, 0.0f, 6.0f * deltaTime);
 	SetMusicVolume(*m_titleMusic, m_musicVolume);
 	if (m_fadeOpacity <= 1.0f - 0.0012f)
-		return;
+		return false;
 
 	m_fadeOpacity = 1.0f;
 	m_musicVolume = 0.0f;
 	SetMusicVolume(*m_titleMusic, m_musicVolume);
 	m_isFading = false;
+
+	return true;
 }
 
 void MenuState::DrawParticles()

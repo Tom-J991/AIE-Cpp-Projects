@@ -30,7 +30,7 @@ namespace Pong
 		virtual void OnEnter() override;
 		virtual void OnExit() override;
 
-		virtual void Update(float deltaTime) override;
+		virtual bool Update(float deltaTime) override;
 		virtual void Draw() override;
 		
 	private:

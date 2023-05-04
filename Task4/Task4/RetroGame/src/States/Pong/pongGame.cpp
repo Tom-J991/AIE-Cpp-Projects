@@ -40,7 +40,7 @@ namespace Pong
 				UnloadSound(m_loadedSounds[i]);
 	}
 
-	void GameplayState::Update(float deltaTime)
+	bool GameplayState::Update(float deltaTime)
 	{
 		// Move.
 		if (m_ball->CheckCollision(*m_firstPlayer.get(), deltaTime) || m_ball->CheckCollision(*m_secondPlayer.get(), deltaTime))
@@ -71,6 +71,8 @@ namespace Pong
 		// Exit.
 		if (IsKeyReleased(KEY_ESCAPE))
 			Game::Get().ChangeState(eGameState::GAMELIST); // Go back.
+
+		return true;
 	}
 	void GameplayState::Draw()
 	{

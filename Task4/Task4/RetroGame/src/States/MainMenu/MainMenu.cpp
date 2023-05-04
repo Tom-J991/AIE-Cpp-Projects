@@ -7,6 +7,8 @@
 MainMenuState::MainMenuState()
 { 
 	MenuState::MenuState();
+
+	// Setup Particles
 	m_particles = new std::vector<Star>();
 	m_particles->resize(m_particleCount);
 
@@ -16,11 +18,13 @@ MainMenuState::MainMenuState()
 		star.position.x = (float)GetRandomValue(-1, GetScreenWidth() * 2);
 	}
 
+	// Setup Music
 	Music tmpMusic = LoadMusicStream("./assets/vgm/title.ogg");
 	m_titleMusic = &tmpMusic;
 	if (IsMusicReady(*m_titleMusic))
 		PlayMusicStream(*m_titleMusic);
 
+	// Menu
 	m_menu.insert(std::pair<eMenu, std::string>(eMenu::GAMELIST, "Games List"));
 	m_menu.insert(std::pair<eMenu, std::string>(eMenu::OPTIONS, "Options"));
 	m_menu.insert(std::pair<eMenu, std::string>(eMenu::CREDITS, "Credits"));
@@ -29,6 +33,7 @@ MainMenuState::MainMenuState()
 MainMenuState::~MainMenuState()
 { 
 	MenuState::~MenuState();
+	// Remove Music
 	if (IsMusicReady(*m_titleMusic))
 		StopMusicStream(*m_titleMusic);
 	UnloadMusicStream(*m_titleMusic);
@@ -43,9 +48,10 @@ void MainMenuState::OnExit()
 	MenuState::OnExit();
 }
 
-void MainMenuState::Update(float deltaTime)
+bool MainMenuState::Update(float deltaTime)
 {
-	MenuState::Update(deltaTime);
+	if (!MenuState::Update(deltaTime))
+		return false;
 
 	// Options
 	if (IsKeyReleased(KEY_ENTER))
@@ -86,6 +92,8 @@ void MainMenuState::Update(float deltaTime)
 		m_index = (int)eMenu::MENU_MAX - 1;
 	if (m_index >= (int)eMenu::MENU_MAX)
 		m_index = 0;
+
+	return true;
 }
 void MainMenuState::Draw()
 {
@@ -119,33 +127,36 @@ void MainMenuState::Draw()
 	EndDrawing();
 }
 
-void MainMenuState::MenuTransition(const eGameState &state, float deltaTime)
+bool MainMenuState::MenuTransition(const eGameState &state, float deltaTime)
 {
-	MenuState::MenuTransition(state, deltaTime);
-	switch (state)
+	if (MenuState::MenuTransition(state, deltaTime))
 	{
-		case eGameState::GAMELIST:
+		switch (state)
 		{
-			auto *state = (GamesListMenuState *)(Game::Get().GetState((int)eGameState::GAMELIST));
-			state->SetParticles(*m_particles);
-			state->SetMusic(*m_titleMusic);
-			Game::Get().ChangeState(eGameState::GAMELIST);
-		} break;
-		case eGameState::OPTIONS:
-		{
-			auto *state = (OptionsMenuState *)(Game::Get().GetState((int)eGameState::OPTIONS));
-			state->PassParticles(m_particles);
-			state->PassMusic(m_titleMusic);
-			Game::Get().ChangeState(eGameState::OPTIONS);
-		} break;
-		case eGameState::CREDITS:
-		{
-			auto *state = (CreditsMenuState *)(Game::Get().GetState((int)eGameState::CREDITS));
-			state->SetParticles(*m_particles);
-			state->SetMusic(*m_titleMusic);
-			Game::Get().ChangeState(eGameState::CREDITS);
-		} break;
-		default:
-			break;
+			case eGameState::GAMELIST:
+			{
+				auto *state = (GamesListMenuState *)(Game::Get().GetState((int)eGameState::GAMELIST));
+				state->PassParticles(m_particles);
+				state->PassMusic(m_titleMusic);
+				Game::Get().ChangeState(eGameState::GAMELIST);
+			} break;
+			case eGameState::OPTIONS:
+			{
+				auto *state = (OptionsMenuState *)(Game::Get().GetState((int)eGameState::OPTIONS));
+				state->PassParticles(m_particles);
+				state->PassMusic(m_titleMusic);
+				Game::Get().ChangeState(eGameState::OPTIONS);
+			} break;
+			case eGameState::CREDITS:
+			{
+				auto *state = (CreditsMenuState *)(Game::Get().GetState((int)eGameState::CREDITS));
+				state->PassParticles(m_particles);
+				state->PassMusic(m_titleMusic);
+				Game::Get().ChangeState(eGameState::CREDITS);
+			} break;
+			default:
+				break;
+		}
 	}
+	return true;
 }

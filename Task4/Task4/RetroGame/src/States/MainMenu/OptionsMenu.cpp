@@ -12,6 +12,7 @@ namespace Options
 OptionsMenuState::OptionsMenuState()
 { 
 	MenuState::MenuState();
+
 	m_options.insert(std::pair<eOptions, std::string>(eOptions::MASTER_VOLUME, "Master Volume: "));
 	m_options.insert(std::pair<eOptions, std::string>(eOptions::BACK, "Go Back"));
 
@@ -33,9 +34,10 @@ void OptionsMenuState::OnExit()
 }
 
 bool changeVolume = false;
-void OptionsMenuState::Update(float deltaTime)
+bool OptionsMenuState::Update(float deltaTime)
 {
-	MenuState::Update(deltaTime);
+	if (!MenuState::Update(deltaTime))
+		return false;
 
 	// Options
 	if (changeVolume)
@@ -66,7 +68,7 @@ void OptionsMenuState::Update(float deltaTime)
 		}
 	}
 	if (changeVolume)
-		return;
+		return false;
 
 	if (IsKeyReleased(KEY_ESCAPE))
 	{
@@ -81,6 +83,8 @@ void OptionsMenuState::Update(float deltaTime)
 		m_index = (int)eOptions::OPTIONS_MAX - 1;
 	if (m_index >= (int)eOptions::OPTIONS_MAX)
 		m_index = 0;
+
+	return true;
 }
 void OptionsMenuState::Draw()
 {
@@ -116,19 +120,22 @@ void OptionsMenuState::Draw()
 	EndDrawing();
 }
 
-void OptionsMenuState::MenuTransition(const eGameState &state, float deltaTime)
+bool OptionsMenuState::MenuTransition(const eGameState &state, float deltaTime)
 {
-	MenuState::MenuTransition(state, deltaTime);
-	switch (state)
+	if (MenuState::MenuTransition(state, deltaTime))
 	{
-		case eGameState::MENU:
+		switch (state)
 		{
-			auto *state = (MainMenuState*)(Game::Get().GetState((int)eGameState::MENU));
-			state->PassParticles(m_particles);
-			state->PassMusic(m_titleMusic);
-			Game::Get().ChangeState(eGameState::MENU);
-		} break;
-		default:
-			break;
+			case eGameState::MENU:
+			{
+				auto *state = (MainMenuState *)(Game::Get().GetState((int)eGameState::MENU));
+				state->PassParticles(m_particles);
+				state->PassMusic(m_titleMusic);
+				Game::Get().ChangeState(eGameState::MENU);
+			} break;
+			default:
+				break;
+		}
 	}
+	return true;
 }

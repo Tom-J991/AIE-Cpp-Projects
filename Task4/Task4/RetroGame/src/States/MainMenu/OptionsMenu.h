@@ -18,11 +18,11 @@ public:
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
 
-	virtual void Update(float deltaTime) override;
+	virtual bool Update(float deltaTime) override;
 	virtual void Draw() override;
 
 protected:
-	virtual void MenuTransition(const eGameState &state, float deltaTime) override;
+	virtual bool MenuTransition(const eGameState &state, float deltaTime) override;
 
 private:
 	std::map<eOptions, std::string> m_options;

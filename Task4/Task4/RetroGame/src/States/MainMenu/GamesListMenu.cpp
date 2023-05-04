@@ -4,61 +4,29 @@
 
 GamesListMenuState::GamesListMenuState()
 { 
+	MenuState::MenuState();
+
 	m_games.insert(std::pair<eGames, std::string>(eGames::PONG, "PONG"));
 	m_games.insert(std::pair<eGames, std::string>(eGames::BACK, "Go Back"));
 }
 GamesListMenuState::~GamesListMenuState()
-{ }
+{ 
+	MenuState::~MenuState();
+}
 
 void GamesListMenuState::OnEnter()
 {
-	m_musicVolume = 1.0f;
-	SetMusicVolume(m_titleMusic, m_musicVolume);
-	if (!IsMusicStreamPlaying(m_titleMusic))
-		PlayMusicStream(m_titleMusic);
-
-	m_fadeOpacity = 0.0f;
-	m_isReturning = true;
+	MenuState::OnEnter();
 }
 void GamesListMenuState::OnExit()
 {
+	MenuState::OnExit();
 }
 
-void GamesListMenuState::Update(float deltaTime)
+bool GamesListMenuState::Update(float deltaTime)
 {
-	if (IsMusicReady(m_titleMusic))
-		UpdateMusicStream(m_titleMusic);
-
-	// Background Particles
-	for (Star &star : m_particles)
-	{
-		if (star.position.x > GetScreenWidth())
-			star.Init();
-
-		star.position.x += star.speed * deltaTime;
-	}
-
-	// Transition
-	if (m_isReturning)
-	{
-		m_menuOffset = Lerp(m_menuOffset, 0.0f, 8.0f * deltaTime);
-		if (m_menuOffset >= -1.0f)
-		{
-			m_menuOffset = 0.0f;
-			m_isReturning = false;
-		}
-		return;
-	}
-	if (m_isTransition)
-	{
-		MenuTransition(m_transitionDest, deltaTime);
-		return;
-	}
-	if (m_isFading)
-	{
-		FadeTransition(m_transitionDest, deltaTime);
-		return;
-	}
+	if (!MenuState::Update(deltaTime))
+		return false;
 
 	// Options
 	if (IsKeyReleased(KEY_ENTER))
@@ -93,18 +61,15 @@ void GamesListMenuState::Update(float deltaTime)
 		m_index = (int)eGames::GAMES_MAX - 1;
 	if (m_index >= (int)eGames::GAMES_MAX)
 		m_index = 0;
+
+	return true;
 }
 void GamesListMenuState::Draw()
 {
 	BeginDrawing();
 	ClearBackground(BLACK);
 	{
-		// Background Particles
-		for (const Star &star : m_particles)
-		{
-			const Color c = ColorFromHSV(0, 0, star.brightness);
-			DrawRectangle((int)star.position.x, (int)star.position.y, (int)star.radius, (int)star.radius, c);
-		}
+		MenuState::DrawParticles();
 		// Title
 		const char *title = "Games: ";
 		int titleOff = MeasureText(title, 48) / 2;
@@ -123,55 +88,45 @@ void GamesListMenuState::Draw()
 			int optionOff = MeasureText(optionText.str().c_str(), fontSize) / 2;
 			DrawText(optionText.str().c_str(), (int)m_menuOffset + GetScreenWidth() / 2 - optionOff, GetScreenHeight() / 2 + (i * 32), fontSize, WHITE);
 		}
-		// Fade
-		const Color fadeColor = Fade(BLACK, m_fadeOpacity);
-		DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), fadeColor);
+		MenuState::DrawFade();
 	}
 	EndDrawing();
 }
 
-void GamesListMenuState::MenuTransition(const eGameState &state, float deltaTime)
+bool GamesListMenuState::MenuTransition(const eGameState &state, float deltaTime)
 {
-	m_menuOffset = Lerp(m_menuOffset, (float)-GetScreenWidth(), 6.0f * deltaTime);
-	if (m_menuOffset <= -GetScreenWidth() + 12.0f)
+	if (MenuState::MenuTransition(state, deltaTime))
 	{
-		m_menuOffset = (float)-GetScreenWidth();
-		m_isTransition = false;
 		switch (state)
 		{
 			case eGameState::MENU:
 			{
 				auto *state = (MainMenuState *)(Game::Get().GetState((int)eGameState::MENU));
-				state->PassParticles(&m_particles);
-				state->PassMusic(&m_titleMusic);
+				state->PassParticles(m_particles);
+				state->PassMusic(m_titleMusic);
 				Game::Get().ChangeState(eGameState::MENU);
 			} break;
 			default:
 				break;
 		}
 	}
+	return true;
 }
-void GamesListMenuState::FadeTransition(const eGameState &state, float deltaTime)
+bool GamesListMenuState::FadeTransition(const eGameState &state, float deltaTime)
 {
-	m_fadeOpacity = Lerp(m_fadeOpacity, 1.0f, 6.0f * deltaTime);
-	m_musicVolume = Lerp(m_musicVolume, 0.0f, 6.0f * deltaTime);
-	SetMusicVolume(m_titleMusic, m_musicVolume);
-	if (m_fadeOpacity >= 1.0f - 0.0012f)
+	if (MenuState::FadeTransition(state, deltaTime))
 	{
-		m_fadeOpacity = 1.0f;
-		m_musicVolume = 0.0f;
-		SetMusicVolume(m_titleMusic, m_musicVolume);
-		m_isFading = false;
 		switch (state)
 		{
 			case eGameState::PONG:
 			{
-				if (IsMusicStreamPlaying(m_titleMusic))
-					StopMusicStream(m_titleMusic);
+				if (IsMusicStreamPlaying(*m_titleMusic))
+					StopMusicStream(*m_titleMusic);
 				Game::Get().ChangeState(eGameState::PONG);
 			} break;
 			default:
 				break;
 		}
 	}
+	return true;
 }

@@ -22,15 +22,15 @@ public:
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
 
-	virtual void Update(float deltaTime) override;
+	virtual bool Update(float deltaTime) override;
 	virtual void Draw() override;
 
 	virtual void PassParticles(std::vector<Star> *particles) { m_particles = particles; }
 	virtual void PassMusic(Music *music) { m_titleMusic = music; }
 
 protected:
-	virtual void MenuTransition(const eGameState &state, float deltaTime);
-	virtual void FadeTransition(const eGameState &state, float deltaTime);
+	virtual bool MenuTransition(const eGameState &state, float deltaTime);
+	virtual bool FadeTransition(const eGameState &state, float deltaTime);
 
 	void DrawParticles();
 	void DrawFade();
@@ -46,7 +46,7 @@ protected:
 	bool m_isFading = false;
 	eGameState m_transitionDest;
 
-	float m_menuOffset = (float)-GetScreenWidth();
+	float m_menuOffset = (float)GetScreenWidth();
 	float m_fadeOpacity = 0;
 	float m_musicVolume = 1.0f;
 
