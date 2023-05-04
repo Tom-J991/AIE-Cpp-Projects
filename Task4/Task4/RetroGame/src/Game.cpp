@@ -11,6 +11,9 @@
 namespace Options
 {
 	extern float g_MasterVolume;
+	extern unsigned int g_ScreenWidth;
+	extern unsigned int g_ScreenHeight;
+
 	extern void ReadOptions();
 }
 
@@ -21,6 +24,8 @@ Game::Game()
 
 	InitAudioDevice();
 	SetMasterVolume(Options::g_MasterVolume);
+
+	SetWindowSize(Options::g_ScreenWidth, Options::g_ScreenHeight);
 
 	m_gameStateManager = std::make_unique<GameStateManager>((int)eGameState::STATES_MAX);
 	m_gameStateManager->RegisterState((int)eGameState::MENU, new MainMenuState());

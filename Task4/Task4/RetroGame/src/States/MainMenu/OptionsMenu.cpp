@@ -8,6 +8,9 @@
 namespace Options
 {
 	extern float g_MasterVolume;
+	extern unsigned int g_ScreenWidth;
+	extern unsigned int g_ScreenHeight;
+
 	extern void WriteOptions();
 }
 
@@ -82,6 +85,8 @@ bool OptionsMenuState::Update(float deltaTime)
 		int dir = (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) - (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)); // Left or Right.
 		m_resolutionIndex += dir;
 		Vector2 r = m_resolutions[m_resolutionIndex].second;
+		Options::g_ScreenWidth = r.x;
+		Options::g_ScreenHeight = r.y;
 		SetWindowSize(r.x, r.y);
 	}
 
