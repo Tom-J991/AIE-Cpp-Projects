@@ -64,6 +64,7 @@ void OptionsMenuState::OnExit()
 
 bool changeVolume = false;
 bool changeResolution = false;
+bool resolutionChanged = false;
 bool OptionsMenuState::Update(float deltaTime)
 {
 	if (!MenuState::Update(deltaTime))
@@ -84,10 +85,11 @@ bool OptionsMenuState::Update(float deltaTime)
 	{
 		int dir = (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) - (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)); // Left or Right.
 		m_resolutionIndex += dir;
-		Vector2 r = m_resolutions[m_resolutionIndex].second;
-		Options::g_ScreenWidth = r.x;
-		Options::g_ScreenHeight = r.y;
-		SetWindowSize(r.x, r.y);
+		if (m_resolutionIndex < 0)
+			m_resolutionIndex = m_resolutions.size()-1;
+		if (m_resolutionIndex >= m_resolutions.size())
+			m_resolutionIndex = 0;
+		resolutionChanged = true;
 	}
 
 	if (IsKeyReleased(KEY_ENTER))
@@ -103,6 +105,19 @@ bool OptionsMenuState::Update(float deltaTime)
 			{
 				changeResolution = !changeResolution;
 				m_optionsBold[eOptions::RESOLUTION] = !m_optionsBold[eOptions::RESOLUTION];
+				if (resolutionChanged)
+				{
+					Vector2 r = m_resolutions[m_resolutionIndex].second;
+					Options::g_ScreenWidth = r.x;
+					Options::g_ScreenHeight = r.y;
+					SetWindowSize(r.x, r.y);
+					for (Star &star : *m_particles)
+					{
+						star.Init();
+						star.position.x = (float)GetRandomValue(-1, GetScreenWidth() * 2);
+					}
+					resolutionChanged = false;
+				}
 			} break;
 			case (int)eOptions::BACK:
 			{
