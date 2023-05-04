@@ -1,5 +1,7 @@
 #include "pongBall.h"
 
+#include "pongPaddle.h"
+
 template <typename T> int sgn(T val) { // Sign function. Returns -1 for negative numbers or 1 for positive numbers.
 	return (T(0) < val) - (val < T(0));
 }

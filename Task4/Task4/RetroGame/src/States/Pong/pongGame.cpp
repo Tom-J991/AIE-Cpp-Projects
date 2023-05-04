@@ -12,8 +12,6 @@ namespace Pong
 		m_firstPlayer = std::make_unique<Paddle>(1);
 		m_secondPlayer = std::make_unique<Paddle>(2);
 
-		m_aiPlayer = false;
-
 		m_loadedSounds.resize((int)eSounds::SOUNDS_MAX);
 	}
 	GameplayState::~GameplayState()
@@ -31,6 +29,8 @@ namespace Pong
 		m_ball->Init();
 		m_firstPlayer->Init();
 		m_secondPlayer->Init();
+
+		m_secondPlayer->SetAI(m_onePlayer);
 	}
 	void GameplayState::OnExit()
 	{
@@ -49,10 +49,8 @@ namespace Pong
 			PlaySFX(eSounds::BOUNDS);
 
 		m_ball->Move(deltaTime);
-		m_firstPlayer->Move(deltaTime);
-
-		if (!m_aiPlayer)
-			m_secondPlayer->Move(deltaTime);
+		m_firstPlayer->Move(*m_ball.get(), deltaTime);
+		m_secondPlayer->Move(*m_ball.get(), deltaTime);
 
 		// Score.
 		if (m_ball->Position().x > GetScreenWidth())

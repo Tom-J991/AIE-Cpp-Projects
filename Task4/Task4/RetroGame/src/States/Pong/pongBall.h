@@ -3,10 +3,10 @@
 #include <raylib.h>
 #include <raymath.h>
 
-#include "pongPaddle.h"
-
 namespace Pong
 {
+	class Paddle;
+
 	class Ball
 	{
 	public:

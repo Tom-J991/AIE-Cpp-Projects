@@ -3,7 +3,8 @@ More options.
 	- Resolution?
 	- Custom Key mapping?
 Complete PONG.
-	- One player vs AI mode.
+	- Better One Player AI.
+	- Move towards prediction instead of ball.
 More Games.
 	- Arkanoid?
 	- Snake?

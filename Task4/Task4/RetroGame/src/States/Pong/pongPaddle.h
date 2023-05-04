@@ -7,6 +7,16 @@
 
 namespace Pong
 {
+	class Ball;
+
+	enum class eAIStates
+	{
+		IDLE = 0,
+		MOVE_UP,
+		MOVE_DOWN,
+		STATE_MAX
+	};
+
 	enum class eControl
 	{
 		UP = 0,
@@ -22,7 +32,8 @@ namespace Pong
 
 		void Init();
 
-		void Move(float deltaTime);
+		void Move(Ball &ball, float deltaTime);
+		void MoveAI(Ball &ball, float deltaTime);
 		void Draw();
 
 		Vector2 Position() const { return m_pos; }
@@ -40,7 +51,13 @@ namespace Pong
 		int Player() const { return m_player; }
 
 		int Score() const { return m_score; }
-		void SetScore(int score) { m_score = score; }
+		void SetScore(const int score) { m_score = score; }
+
+		bool IsAI() const { return m_ai; }
+		void SetAI(const bool ai) { m_ai = ai; }
+
+	private:
+		Vector2 PredictBall(Ball &ball, float deltaTime);
 
 	private:
 		Vector2 m_pos;
@@ -49,6 +66,9 @@ namespace Pong
 
 		int m_player;
 		int m_score;
+
+		bool m_ai;
+		eAIStates m_aiState;
 
 		std::unordered_map<eControl, KeyboardKey> m_controlMap;
 

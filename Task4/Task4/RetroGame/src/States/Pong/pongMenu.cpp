@@ -1,5 +1,6 @@
 #include "pongMenu.h"
 
+#include "pongGame.h"
 #include "../MainMenu/GamesListMenu.h"
 
 namespace Pong
@@ -38,9 +39,13 @@ namespace Pong
 			{
 				case (int)eModes::ONEPLAYER:
 				{
+					onePlayer = true;
+					m_isTransition = true;
+					m_transitionDest = eGameState::PONG_GAME;
 				} break;
 				case (int)eModes::TWOPLAYER:
 				{
+					onePlayer = false;
 					m_isTransition = true;
 					m_transitionDest = eGameState::PONG_GAME;
 				} break;
@@ -109,6 +114,8 @@ namespace Pong
 				} break;
 				case eGameState::PONG_GAME:
 				{
+					auto *state = (GameplayState*)(Game::Get().GetState((int)eGameState::PONG_GAME));
+					state->SetOnePlayer(onePlayer);
 					Game::Get().ChangeState(eGameState::PONG_GAME);
 				} break;
 				default:

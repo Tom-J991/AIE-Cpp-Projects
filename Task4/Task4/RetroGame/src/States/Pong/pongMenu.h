@@ -29,6 +29,7 @@ namespace Pong
 
 	private:
 		std::map<eModes, std::string> m_modes;
+		bool onePlayer;
 
 	};
 

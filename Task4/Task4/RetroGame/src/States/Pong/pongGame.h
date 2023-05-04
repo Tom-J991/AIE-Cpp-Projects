@@ -32,6 +32,8 @@ namespace Pong
 
 		virtual bool Update(float deltaTime) override;
 		virtual void Draw() override;
+
+		void SetOnePlayer(const bool onePlayer) { m_onePlayer = onePlayer; }
 		
 	private:
 		void PlaySFX(eSounds sound);
@@ -41,7 +43,7 @@ namespace Pong
 		std::unique_ptr<Paddle> m_firstPlayer;
 		std::unique_ptr<Paddle> m_secondPlayer;
 
-		bool m_aiPlayer;
+		bool m_onePlayer;
 
 		std::vector<Sound> m_loadedSounds;
 

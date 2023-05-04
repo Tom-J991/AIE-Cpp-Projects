@@ -16,6 +16,7 @@ void MenuState::OnEnter()
 			PlayMusicStream(m_titleMusic);
 	}
 
+	m_menuOffset = (int)-GetScreenWidth();
 	m_fadeOpacity = 0.0f;
 	m_isReturning = true;
 }
@@ -44,7 +45,7 @@ bool MenuState::Update(float deltaTime)
 	if (m_isReturning)
 	{
 		m_menuOffset = Lerp(m_menuOffset, 0.0f, 8.0f * deltaTime);
-		if (m_menuOffset <= 1.0f)
+		if (m_menuOffset >= -1.0f)
 		{
 			m_menuOffset = 0.0f;
 			m_isReturning = false;
