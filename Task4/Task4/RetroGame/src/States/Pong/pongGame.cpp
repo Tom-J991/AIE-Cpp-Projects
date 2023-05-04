@@ -70,7 +70,7 @@ namespace Pong
 
 		// Exit.
 		if (IsKeyReleased(KEY_ESCAPE))
-			Game::Get().ChangeState(eGameState::GAMELIST); // Go back.
+			Game::Get().ChangeState(eGameState::PONG_MENU); // Go back.
 
 		return true;
 	}

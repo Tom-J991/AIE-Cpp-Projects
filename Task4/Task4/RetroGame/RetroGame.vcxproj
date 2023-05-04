@@ -224,6 +224,7 @@
     <ClCompile Include="src\States\Menu.cpp" />
     <ClCompile Include="src\States\Pong\pongBall.cpp" />
     <ClCompile Include="src\States\Pong\pongGame.cpp" />
+    <ClCompile Include="src\States\Pong\pongMenu.cpp" />
     <ClCompile Include="src\States\Pong\pongPaddle.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\States\MainMenu\MainMenu.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="src\States\MainMenu\OptionsMenu.h" />
     <ClInclude Include="src\States\Pong\pongBall.h" />
     <ClInclude Include="src\States\Pong\pongGame.h" />
+    <ClInclude Include="src\States\Pong\pongMenu.h" />
     <ClInclude Include="src\States\Pong\pongPaddle.h" />
     <ClInclude Include="src\States\MainMenu\MainMenu.h" />
     <ClInclude Include="src\States\StarParticle.h" />

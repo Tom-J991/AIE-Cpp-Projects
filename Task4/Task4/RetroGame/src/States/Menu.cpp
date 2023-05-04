@@ -9,9 +9,12 @@ MenuState::~MenuState()
 void MenuState::OnEnter()
 {
 	m_musicVolume = 1.0f;
-	SetMusicVolume(m_titleMusic, m_musicVolume);
-	if (!IsMusicStreamPlaying(m_titleMusic))
-		PlayMusicStream(m_titleMusic);
+	if (IsMusicReady(m_titleMusic))
+	{
+		SetMusicVolume(m_titleMusic, m_musicVolume);
+		if (!IsMusicStreamPlaying(m_titleMusic))
+			PlayMusicStream(m_titleMusic);
+	}
 
 	m_fadeOpacity = 0.0f;
 	m_isReturning = true;
@@ -26,12 +29,15 @@ bool MenuState::Update(float deltaTime)
 		UpdateMusicStream(m_titleMusic);
 
 	// Background Particles
-	for (Star &star : *m_particles)
+	if (m_particles != nullptr)
 	{
-		if (star.position.x > GetScreenWidth())
-			star.Init();
+		for (Star &star : *m_particles)
+		{
+			if (star.position.x > GetScreenWidth())
+				star.Init();
 
-		star.position.x += star.speed * deltaTime;
+			star.position.x += star.speed * deltaTime;
+		}
 	}
 
 	// Transition
@@ -86,13 +92,15 @@ bool MenuState::FadeTransition(const eGameState &state, float deltaTime)
 {
 	m_fadeOpacity = Lerp(m_fadeOpacity, 1.0f, 6.0f * deltaTime);
 	m_musicVolume = Lerp(m_musicVolume, 0.0f, 6.0f * deltaTime);
-	SetMusicVolume(m_titleMusic, m_musicVolume);
+	if (IsMusicReady(m_titleMusic))
+		SetMusicVolume(m_titleMusic, m_musicVolume);
 	if (m_fadeOpacity <= 1.0f - 0.0012f)
 		return false;
 
 	m_fadeOpacity = 1.0f;
 	m_musicVolume = 0.0f;
-	SetMusicVolume(m_titleMusic, m_musicVolume);
+	if (IsMusicReady(m_titleMusic))
+		SetMusicVolume(m_titleMusic, m_musicVolume);
 	m_isFading = false;
 
 	return true;
@@ -100,10 +108,13 @@ bool MenuState::FadeTransition(const eGameState &state, float deltaTime)
 
 void MenuState::DrawParticles()
 {
-	for (const Star &star : *m_particles)
+	if (m_particles != nullptr)
 	{
-		const Color c = ColorFromHSV(0, 0, star.brightness);
-		DrawRectangle((int)star.position.x, (int)star.position.y, (int)star.radius, (int)star.radius, c);
+		for (const Star &star : *m_particles)
+		{
+			const Color c = ColorFromHSV(0, 0, star.brightness);
+			DrawRectangle((int)star.position.x, (int)star.position.y, (int)star.radius, (int)star.radius, c);
+		}
 	}
 }
 void MenuState::DrawFade()

@@ -13,7 +13,8 @@ enum class eGameState
 	GAMELIST,
 	OPTIONS,
 	CREDITS,
-	PONG,
+	PONG_MENU,
+	PONG_GAME,
 	STATES_MAX
 };
 

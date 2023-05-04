@@ -36,7 +36,7 @@ bool GamesListMenuState::Update(float deltaTime)
 			case (int)eGames::PONG:
 			{
 				m_isFading = true;
-				m_transitionDest = eGameState::PONG;
+				m_transitionDest = eGameState::PONG_MENU;
 			} break;
 			case (int)eGames::BACK:
 			{
@@ -118,11 +118,11 @@ bool GamesListMenuState::FadeTransition(const eGameState &state, float deltaTime
 	{
 		switch (state)
 		{
-			case eGameState::PONG:
+			case eGameState::PONG_MENU:
 			{
 				if (IsMusicStreamPlaying(m_titleMusic))
 					StopMusicStream(m_titleMusic);
-				Game::Get().ChangeState(eGameState::PONG);
+				Game::Get().ChangeState(eGameState::PONG_MENU);
 			} break;
 			default:
 				break;

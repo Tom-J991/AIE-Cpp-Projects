@@ -4,6 +4,7 @@
 #include "States/MainMenu/GamesListMenu.h"
 #include "States/MainMenu/OptionsMenu.h"
 #include "States/MainMenu/CreditsMenu.h"
+#include "States/Pong/pongMenu.h"
 #include "States/Pong/pongGame.h"
 
 // Globals.
@@ -26,7 +27,8 @@ Game::Game()
 	m_gameStateManager->RegisterState((int)eGameState::GAMELIST, new GamesListMenuState());
 	m_gameStateManager->RegisterState((int)eGameState::OPTIONS, new OptionsMenuState());
 	m_gameStateManager->RegisterState((int)eGameState::CREDITS, new CreditsMenuState());
-	m_gameStateManager->RegisterState((int)eGameState::PONG, new Pong::GameplayState());
+	m_gameStateManager->RegisterState((int)eGameState::PONG_MENU, new Pong::TitleState());
+	m_gameStateManager->RegisterState((int)eGameState::PONG_GAME, new Pong::GameplayState());
 
 	m_gameStateManager->PushState((int)eGameState::MENU);
 }

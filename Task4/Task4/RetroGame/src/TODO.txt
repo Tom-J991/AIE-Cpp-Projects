@@ -3,7 +3,6 @@ More options.
 	- Resolution?
 	- Custom Key mapping?
 Complete PONG.
-	- PONG title menu.
 	- One player vs AI mode.
 More Games.
 	- Arkanoid?
