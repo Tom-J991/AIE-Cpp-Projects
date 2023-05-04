@@ -26,7 +26,7 @@ public:
 	virtual void Draw() override;
 
 	virtual void PassParticles(std::vector<Star> *particles) { m_particles = particles; }
-	virtual void PassMusic(Music *music) { m_titleMusic = music; }
+	virtual void PassMusic(const Music &music) { m_titleMusic = music; }
 
 protected:
 	virtual bool MenuTransition(const eGameState &state, float deltaTime);
@@ -50,6 +50,6 @@ protected:
 	float m_fadeOpacity = 0;
 	float m_musicVolume = 1.0f;
 
-	Music* m_titleMusic;
+	Music m_titleMusic;
 
 };

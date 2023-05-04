@@ -120,8 +120,8 @@ bool GamesListMenuState::FadeTransition(const eGameState &state, float deltaTime
 		{
 			case eGameState::PONG:
 			{
-				if (IsMusicStreamPlaying(*m_titleMusic))
-					StopMusicStream(*m_titleMusic);
+				if (IsMusicStreamPlaying(m_titleMusic))
+					StopMusicStream(m_titleMusic);
 				Game::Get().ChangeState(eGameState::PONG);
 			} break;
 			default:

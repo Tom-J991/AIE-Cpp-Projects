@@ -19,10 +19,7 @@ MainMenuState::MainMenuState()
 	}
 
 	// Setup Music
-	Music tmpMusic = LoadMusicStream("./assets/vgm/title.ogg");
-	m_titleMusic = &tmpMusic;
-	if (IsMusicReady(*m_titleMusic))
-		PlayMusicStream(*m_titleMusic);
+	m_titleMusic = LoadMusicStream("./assets/vgm/title.ogg");
 
 	// Menu
 	m_menu.insert(std::pair<eMenu, std::string>(eMenu::GAMELIST, "Games List"));
@@ -34,9 +31,9 @@ MainMenuState::~MainMenuState()
 { 
 	MenuState::~MenuState();
 	// Remove Music
-	if (IsMusicReady(*m_titleMusic))
-		StopMusicStream(*m_titleMusic);
-	UnloadMusicStream(*m_titleMusic);
+	if (IsMusicReady(m_titleMusic))
+		StopMusicStream(m_titleMusic);
+	UnloadMusicStream(m_titleMusic);
 }
 
 void MainMenuState::OnEnter()
