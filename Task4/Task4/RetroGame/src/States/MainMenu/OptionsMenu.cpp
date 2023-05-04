@@ -172,7 +172,7 @@ void OptionsMenuState::Draw()
 				} break;
 				case (int)eOptions::RESOLUTION:
 				{
-					optionText << "{ " << m_resolutions[m_resolutionIndex].first << " }";
+					optionText << "[ " << m_resolutions[m_resolutionIndex].first << " ]";
 				} break;
 				default:
 					break;
