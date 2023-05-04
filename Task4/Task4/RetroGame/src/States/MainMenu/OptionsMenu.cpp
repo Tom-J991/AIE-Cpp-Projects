@@ -2,6 +2,8 @@
 
 #include "MainMenu.h"
 
+#include <iomanip>
+
 // Globals.
 namespace Options
 {
@@ -45,6 +47,8 @@ bool OptionsMenuState::Update(float deltaTime)
 		int dir = (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) - (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)); // Left or Right.
 		Options::g_MasterVolume += 0.1f * dir;
 		Options::g_MasterVolume = Clamp(Options::g_MasterVolume, 0, 1);
+		Options::g_MasterVolume = (float)(std::trunc(Options::g_MasterVolume * 10) / 10); // 1 decimal
+		std::cout << Options::g_MasterVolume << std::endl;
 		SetMasterVolume(Options::g_MasterVolume);
 	}
 
