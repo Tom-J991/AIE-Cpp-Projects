@@ -1,6 +1,5 @@
 TODO:
 More options.
-	- Resolution?
 	- Custom Key mapping?
 Complete PONG.
 	- Better One Player AI.

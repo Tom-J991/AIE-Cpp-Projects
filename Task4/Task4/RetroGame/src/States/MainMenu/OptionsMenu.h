@@ -5,6 +5,7 @@
 enum class eOptions
 {
 	MASTER_VOLUME = 0,
+	RESOLUTION,
 	BACK,
 	OPTIONS_MAX
 };
@@ -27,5 +28,8 @@ protected:
 private:
 	std::map<eOptions, std::string> m_options;
 	std::map<eOptions, bool> m_optionsBold;
+
+	std::vector<std::pair<std::string, Vector2>> m_resolutions;
+	int m_resolutionIndex;
 
 };

@@ -7,6 +7,8 @@
 namespace Options
 {
 	float g_MasterVolume = 0.5f;
+	unsigned int g_ScreenWidth = 800;
+	unsigned int g_ScreenHeight = 600;
 
 	void ReadOptions();
 	void WriteOptions();

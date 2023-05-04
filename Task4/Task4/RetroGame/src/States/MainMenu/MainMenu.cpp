@@ -117,9 +117,9 @@ void MainMenuState::Draw()
 		}
 		// Misc
 		const int miscFontSize = 18;
-		const char *miscText = u8"© Thomas Jackson (BadComoc), 2023";
+		std::string miscText = reinterpret_cast<const char*>(u8"© Thomas Jackson (BadComoc), 2023");
 		int miscOff = miscFontSize + 16;
-		DrawText(miscText, (int)m_menuOffset + 16, GetScreenHeight() - miscOff, miscFontSize, WHITE);
+		DrawText(miscText.c_str(), (int)m_menuOffset + 16, GetScreenHeight() - miscOff, miscFontSize, WHITE);
 	}
 	EndDrawing();
 }

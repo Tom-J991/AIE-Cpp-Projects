@@ -15,11 +15,35 @@ OptionsMenuState::OptionsMenuState()
 { 
 	MenuState::MenuState();
 
+	// Initalize Options
 	m_options.insert(std::pair<eOptions, std::string>(eOptions::MASTER_VOLUME, "Master Volume: "));
+	m_options.insert(std::pair<eOptions, std::string>(eOptions::RESOLUTION, "Resolution: "));
 	m_options.insert(std::pair<eOptions, std::string>(eOptions::BACK, "Go Back"));
-
 	m_optionsBold.insert(std::pair<eOptions, bool>(eOptions::MASTER_VOLUME, false));
+	m_optionsBold.insert(std::pair<eOptions, bool>(eOptions::RESOLUTION, false));
 	m_optionsBold.insert(std::pair<eOptions, bool>(eOptions::BACK, false));
+
+	// Initialize Resolutions
+	m_resolutions.push_back(std::pair<std::string, Vector2>("640, 360", { 640, 360 }));
+	m_resolutions.push_back(std::pair<std::string, Vector2>("640, 480", { 640, 480 }));
+	m_resolutions.push_back(std::pair<std::string, Vector2>("800, 600", { 800, 600 }));
+	m_resolutions.push_back(std::pair<std::string, Vector2>("960, 540", { 960, 540 }));
+	m_resolutions.push_back(std::pair<std::string, Vector2>("1024, 768", { 1024, 768 }));
+	m_resolutions.push_back(std::pair<std::string, Vector2>("1280, 720", { 1280, 720 }));
+	m_resolutions.push_back(std::pair<std::string, Vector2>("1366, 768", { 1366, 768 }));
+	m_resolutions.push_back(std::pair<std::string, Vector2>("1400, 1080", { 1400, 1080 }));
+	m_resolutions.push_back(std::pair<std::string, Vector2>("1600, 900", { 1600, 900 }));
+	m_resolutions.push_back(std::pair<std::string, Vector2>("1920, 1080", { 1920, 1080 }));
+
+	int width = GetScreenWidth();
+	int height = GetScreenHeight();
+	int i = 0;
+	for (auto const &[key, val] : m_resolutions)
+	{
+		if (width == val.x && height == val.y)
+			m_resolutionIndex = i;
+		i++;
+	}
 }
 OptionsMenuState::~OptionsMenuState()
 { 
@@ -36,6 +60,7 @@ void OptionsMenuState::OnExit()
 }
 
 bool changeVolume = false;
+bool changeResolution = false;
 bool OptionsMenuState::Update(float deltaTime)
 {
 	if (!MenuState::Update(deltaTime))
@@ -48,8 +73,16 @@ bool OptionsMenuState::Update(float deltaTime)
 		Options::g_MasterVolume += 0.1f * dir;
 		Options::g_MasterVolume = Clamp(Options::g_MasterVolume, 0, 1);
 		Options::g_MasterVolume = (float)(std::trunc(Options::g_MasterVolume * 10) / 10); // 1 decimal
-		std::cout << Options::g_MasterVolume << std::endl;
+		//std::cout << Options::g_MasterVolume << std::endl;
 		SetMasterVolume(Options::g_MasterVolume);
+	}
+
+	if (changeResolution)
+	{
+		int dir = (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) - (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)); // Left or Right.
+		m_resolutionIndex += dir;
+		Vector2 r = m_resolutions[m_resolutionIndex].second;
+		SetWindowSize(r.x, r.y);
 	}
 
 	if (IsKeyReleased(KEY_ENTER))
@@ -60,6 +93,11 @@ bool OptionsMenuState::Update(float deltaTime)
 			{
 				changeVolume = !changeVolume;
 				m_optionsBold[eOptions::MASTER_VOLUME] = !m_optionsBold[eOptions::MASTER_VOLUME];
+			} break;
+			case (int)eOptions::RESOLUTION:
+			{
+				changeResolution = !changeResolution;
+				m_optionsBold[eOptions::RESOLUTION] = !m_optionsBold[eOptions::RESOLUTION];
 			} break;
 			case (int)eOptions::BACK:
 			{
@@ -111,6 +149,10 @@ void OptionsMenuState::Draw()
 				case (int)eOptions::MASTER_VOLUME:
 				{
 					optionText << Options::g_MasterVolume;
+				} break;
+				case (int)eOptions::RESOLUTION:
+				{
+					optionText << "{ " << m_resolutions[m_resolutionIndex].first << " }";
 				} break;
 				default:
 					break;
