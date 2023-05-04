@@ -76,7 +76,7 @@ namespace Pong
 			float intersectY = paddle.Position().y - m_pos.y; // How far from the middle of the paddle did the ball hit?
 			float normalizedIntersect = intersectY / (paddle.Size().y/2); // -1 <-> 1
 			float bounceAngle = normalizedIntersect * (45 * DEG2RAD);
-			m_speed = 128 + abs(normalizedIntersect) * 256; // 128 min speed, (128+256) 384 max speed
+			m_speed = 256 + abs(normalizedIntersect) * 256; // 256 min speed, 512 max speed
 			
 			if (paddle.Player() == 1) // Left Paddle
 			{

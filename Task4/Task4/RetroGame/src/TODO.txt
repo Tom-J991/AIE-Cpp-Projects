@@ -1,7 +1,7 @@
 TODO:
 More options.
 	- Custom Key mapping?
-Complete PONG.
+Better PONG.
 	- Better One Player AI.
 	- Move towards prediction instead of ball.
 More Games.
@@ -12,9 +12,6 @@ More Games.
 	- Galaga/Galaxian?
 	- Frogger?
 	- Pac-Man?
-	- Bomberman?
-	- Dig Dug?
 	- Donkey Kong?
 	- Tetris?
 	- Mario-like Platformer?
-	- Minesweeper?
