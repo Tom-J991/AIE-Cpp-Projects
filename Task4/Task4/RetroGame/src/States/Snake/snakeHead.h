@@ -1,26 +1,19 @@
 #pragma once
 
-#include <raylib.h>
-#include <raymath.h>
+#include "snakeObject.h"
 
 namespace Snake
 {
-	class SnakeHead
+	class SnakeHead : public SnakeObject
 	{
 	public:
 		SnakeHead();
 		~SnakeHead();
 
-		void Init();
+		virtual void Init() override;
 
-		bool Move(float deltaTime);
-		void Draw();
-
-	private:
-		Vector2 m_pos;
-		Vector2 m_size;
-		Vector2 m_vel;
-		float m_speed;
+		virtual bool Move(float deltaTime) override;
+		virtual void Draw() override;
 
 	};
 

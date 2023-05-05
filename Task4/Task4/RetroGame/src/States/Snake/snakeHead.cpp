@@ -17,6 +17,25 @@ namespace Snake
 
 	bool SnakeHead::Move(float deltaTime)
 	{
+		// Get Input
+		int hMove = IsKeyPressed(KEY_RIGHT) - IsKeyPressed(KEY_LEFT);
+		int vMove = IsKeyPressed(KEY_DOWN) - IsKeyPressed(KEY_UP);
+
+		// Move
+		if (hMove != 0)
+		{
+			m_vel.y = 0;
+			m_vel.x = hMove * m_speed;
+		}
+		if (vMove != 0)
+		{
+			m_vel.x = 0;
+			m_vel.y = vMove * m_speed;
+		}
+
+		m_pos.x += m_vel.x * deltaTime;
+		m_pos.y += m_vel.y * deltaTime;
+
 		return true;
 	}
 	void SnakeHead::Draw()

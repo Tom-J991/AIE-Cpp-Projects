@@ -6,6 +6,7 @@
 #include "../../GameState.h"
 
 #include "snakeHead.h"
+#include "snakeTail.h"
 
 #include <raylib.h>
 #include <raymath.h>
@@ -26,6 +27,7 @@ namespace Snake
 
 	private:
 		std::unique_ptr<SnakeHead> m_snakeHead;
+		std::vector<std::unique_ptr<SnakeTail>> m_snakeTail;
 
 	};
 
