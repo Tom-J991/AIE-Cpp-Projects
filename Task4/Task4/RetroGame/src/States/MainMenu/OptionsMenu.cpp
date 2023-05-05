@@ -86,7 +86,7 @@ bool OptionsMenuState::Update(float deltaTime)
 		int dir = (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) - (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)); // Left or Right.
 		m_resolutionIndex += dir;
 		if (m_resolutionIndex < 0)
-			m_resolutionIndex = m_resolutions.size()-1;
+			m_resolutionIndex = (int)m_resolutions.size()-1;
 		if (m_resolutionIndex >= m_resolutions.size())
 			m_resolutionIndex = 0;
 		resolutionChanged = true;
@@ -108,9 +108,9 @@ bool OptionsMenuState::Update(float deltaTime)
 				if (resolutionChanged)
 				{
 					Vector2 r = m_resolutions[m_resolutionIndex].second;
-					Options::g_ScreenWidth = r.x;
-					Options::g_ScreenHeight = r.y;
-					SetWindowSize(r.x, r.y);
+					Options::g_ScreenWidth = (unsigned int)r.x;
+					Options::g_ScreenHeight = (unsigned int)r.y;
+					SetWindowSize((int)r.x, (int)r.y);
 					for (Star &star : *m_particles)
 					{
 						star.Init();

@@ -7,6 +7,7 @@ GamesListMenuState::GamesListMenuState()
 	MenuState::MenuState();
 
 	m_games.insert(std::pair<eGames, std::string>(eGames::PONG, "PONG"));
+	m_games.insert(std::pair<eGames, std::string>(eGames::SNAKE, "SNAKE"));
 	m_games.insert(std::pair<eGames, std::string>(eGames::BACK, "Go Back"));
 }
 GamesListMenuState::~GamesListMenuState()
@@ -37,6 +38,11 @@ bool GamesListMenuState::Update(float deltaTime)
 			{
 				m_isFading = true;
 				m_transitionDest = eGameState::PONG_MENU;
+			} break;
+			case (int)eGames::SNAKE:
+			{
+				m_isFading = true;
+				m_transitionDest = eGameState::SNAKE_GAME;
 			} break;
 			case (int)eGames::BACK:
 			{
@@ -116,13 +122,17 @@ bool GamesListMenuState::FadeTransition(const eGameState &state, float deltaTime
 {
 	if (MenuState::FadeTransition(state, deltaTime))
 	{
+		if (IsMusicStreamPlaying(m_titleMusic))
+			StopMusicStream(m_titleMusic);
 		switch (state)
 		{
 			case eGameState::PONG_MENU:
 			{
-				if (IsMusicStreamPlaying(m_titleMusic))
-					StopMusicStream(m_titleMusic);
 				Game::Get().ChangeState(eGameState::PONG_MENU);
+			} break;
+			case eGameState::SNAKE_GAME:
+			{
+				Game::Get().ChangeState(eGameState::SNAKE_GAME);
 			} break;
 			default:
 				break;

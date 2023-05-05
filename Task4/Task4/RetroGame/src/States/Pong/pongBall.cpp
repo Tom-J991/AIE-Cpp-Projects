@@ -39,7 +39,8 @@ namespace Pong
 
 	void Ball::Draw()
 	{
-		DrawRectangle((int)(m_pos.x - (m_size.x / 2)), (int)(m_pos.y - (m_size.y / 2)), (int)m_size.x, (int)m_size.y, WHITE);
+		const Vector2 center = { m_pos.x-(m_size.x/2), m_pos.y-(m_size.y/2) };
+		DrawRectangle((int)center.x, (int)center.y, (int)m_size.x, (int)m_size.y, WHITE);
 	}
 
 	bool Ball::CheckBounds(float deltaTime)
@@ -104,7 +105,7 @@ namespace Pong
 
 	float Ball::CalculateStartingAngle()
 	{
-		float angle = GetRandomValue(0, (360 * DEG2RAD));
+		float angle = (float)GetRandomValue(0, (int)(360 * DEG2RAD));
 		if (angle == 0 || angle == (90 * DEG2RAD) || angle == (180 * DEG2RAD) || angle == (270 * DEG2RAD) || angle == (360 * DEG2RAD))
 			return CalculateStartingAngle();
 		//float angle = (PI);

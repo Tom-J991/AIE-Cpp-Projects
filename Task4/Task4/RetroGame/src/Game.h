@@ -15,6 +15,7 @@ enum class eGameState
 	CREDITS,
 	PONG_MENU,
 	PONG_GAME,
+	SNAKE_GAME,
 	STATES_MAX
 };
 

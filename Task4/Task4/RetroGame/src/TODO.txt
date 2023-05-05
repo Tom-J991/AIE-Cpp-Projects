@@ -3,7 +3,7 @@ More options.
 	- Custom Key mapping?
 Better PONG.
 	- Better One Player AI.
-	- Move towards prediction instead of ball.
+		- Move towards prediction instead of ball.
 More Games.
 	- Arkanoid?
 	- Snake?

@@ -16,7 +16,7 @@ void MenuState::OnEnter()
 			PlayMusicStream(m_titleMusic);
 	}
 
-	m_menuOffset = (int)-GetScreenWidth();
+	m_menuOffset = (float)-GetScreenWidth();
 	m_fadeOpacity = 0.0f;
 	m_isReturning = true;
 }

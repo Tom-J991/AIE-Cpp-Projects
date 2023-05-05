@@ -5,6 +5,7 @@
 enum class eGames
 {
 	PONG = 0,
+	SNAKE,
 	BACK,
 	GAMES_MAX
 };
