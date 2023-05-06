@@ -8,13 +8,10 @@ namespace Snake
 	class SnakeObject
 	{
 	public:
-		SnakeObject();
-		virtual ~SnakeObject();
+		virtual void Init() = 0;
 
-		virtual void Init();
-
-		virtual bool Move(float deltaTime);
-		virtual void Draw();
+		virtual bool Move(float deltaTime) = 0;
+		virtual void Draw() = 0;
 
 		virtual Vector2 Position() const { return m_pos; }
 		virtual Vector2 Size() const { return m_size; }
