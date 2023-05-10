@@ -41,7 +41,6 @@ void CreditsMenuState::OnExit()
 	MenuState::OnExit();
 }
 
-const int fontSize = 20;
 bool CreditsMenuState::Update(float deltaTime)
 {
 	if (!MenuState::Update(deltaTime))
@@ -54,8 +53,8 @@ bool CreditsMenuState::Update(float deltaTime)
 		m_scrollSpeed = 16;
 	m_scroll -= m_scrollSpeed * deltaTime;
 
-	const float end = (float)(m_credits.size() * fontSize);
-	if (m_scroll <= 0 - (end + (fontSize)))
+	const float end = (float)(m_credits.size() * m_fontSize);
+	if (m_scroll <= 0 - (end + (m_fontSize)))
 	{
 		m_menuOffset = (float)-GetScreenWidth();
 		GoBack();
@@ -75,11 +74,11 @@ void CreditsMenuState::Draw()
 	ClearBackground(BLACK);
 	{
 		MenuState::DrawParticles();
-		// Draw Credits
+		// Draw Credits text (line by line)
 		for (int i = 0; i < m_credits.size(); i++)
 		{
-			int creditsOff = MeasureText(m_credits[i].c_str(), fontSize) / 2;
-			DrawText(m_credits[i].c_str(), (int)m_menuOffset + GetScreenWidth() / 2 - creditsOff, (int)m_scroll + (i * fontSize), fontSize, WHITE);
+			int creditsOff = MeasureText(m_credits[i].c_str(), m_fontSize) / 2;
+			DrawText(m_credits[i].c_str(), (int)m_menuOffset + GetScreenWidth() / 2 - creditsOff, (int)m_scroll + (i * m_fontSize), m_fontSize, WHITE);
 		}
 	}
 	EndDrawing();
@@ -92,20 +91,20 @@ void CreditsMenuState::FormatText()
 	// Word Wrap
 	std::stringstream text(m_creditsText);
 	std::stringstream newText;
-	int lineWidth = GetScreenWidth() - 128;
-	int spaceWidth = MeasureText(" ", fontSize);
+	const int spaceWidth = MeasureText(" ", m_fontSize);
+	const int lineWidth = GetScreenWidth() - (spaceWidth * m_fontSize);
 	int spaceLeft = lineWidth;
 	for (std::string word; std::getline(text, word, ' '); )
 	{
-		if (MeasureText(word.c_str(), fontSize) + spaceWidth > spaceLeft)
+		if (MeasureText(word.c_str(), m_fontSize) + spaceWidth > spaceLeft)
 		{
 			newText << '\n';
 			newText << word;
-			spaceLeft = lineWidth - (MeasureText(word.c_str(), fontSize) + spaceWidth);
+			spaceLeft = lineWidth - (MeasureText(word.c_str(), m_fontSize) + spaceWidth);
 		}
 		else
 		{
-			spaceLeft = spaceLeft - (MeasureText(word.c_str(), fontSize) + spaceWidth);
+			spaceLeft = spaceLeft - (MeasureText(word.c_str(), m_fontSize) + spaceWidth);
 			newText << word;
 		}
 		newText << ' ';

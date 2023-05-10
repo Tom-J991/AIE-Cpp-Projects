@@ -22,6 +22,7 @@ private:
 	void GoBack();
 
 private:
+	const int m_fontSize = 20;
 	float m_scroll = (float)GetScreenHeight()/2;
 	float m_scrollSpeed = 16;
 	std::string m_creditsText;
