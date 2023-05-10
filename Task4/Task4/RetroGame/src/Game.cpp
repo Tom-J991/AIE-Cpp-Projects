@@ -21,22 +21,26 @@ namespace Options
 Game* Game::m_instance = nullptr;
 Game::Game()
 {
-	Options::ReadOptions();
-
 	InitAudioDevice();
+	// Initialize Settings
+	Options::ReadOptions();
 	SetMasterVolume(Options::g_MasterVolume);
-
 	SetWindowSize(Options::g_ScreenWidth, Options::g_ScreenHeight);
 
+	// Initialize States
 	m_gameStateManager = std::make_unique<GameStateManager>((int)eGameState::STATES_MAX);
+	// Main Menu
 	m_gameStateManager->RegisterState((int)eGameState::MENU, new MainMenuState());
 	m_gameStateManager->RegisterState((int)eGameState::GAMELIST, new GamesListMenuState());
 	m_gameStateManager->RegisterState((int)eGameState::OPTIONS, new OptionsMenuState());
 	m_gameStateManager->RegisterState((int)eGameState::CREDITS, new CreditsMenuState());
+	// Pong
 	m_gameStateManager->RegisterState((int)eGameState::PONG_MENU, new Pong::TitleState());
 	m_gameStateManager->RegisterState((int)eGameState::PONG_GAME, new Pong::GameplayState());
+	// Snake
 	m_gameStateManager->RegisterState((int)eGameState::SNAKE_GAME, new Snake::GameplayState());
 
+	// Goto Main Menu
 	m_gameStateManager->PushState((int)eGameState::MENU);
 }
 Game::~Game()
