@@ -18,7 +18,7 @@ protected:
 	virtual bool MenuTransition(const eGameState &state, float deltaTime) override;
 
 private:
-	void SerializeCreditsText();
+	void FormatText();
 	void GoBack();
 
 private:

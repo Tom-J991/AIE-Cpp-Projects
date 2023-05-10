@@ -22,8 +22,6 @@ CreditsMenuState::CreditsMenuState()
 		m_creditsText = ss.str();
 		creditsFile.close();
 	}
-
-	SerializeCreditsText();
 }
 CreditsMenuState::~CreditsMenuState()
 { 
@@ -35,6 +33,8 @@ void CreditsMenuState::OnEnter()
 	MenuState::OnEnter();
 
 	m_scroll = (float)GetScreenHeight() / 2;
+
+	FormatText();
 }
 void CreditsMenuState::OnExit()
 {
@@ -85,9 +85,34 @@ void CreditsMenuState::Draw()
 	EndDrawing();
 }
 
-void CreditsMenuState::SerializeCreditsText()
+void CreditsMenuState::FormatText()
 {
-	std::stringstream ss(m_creditsText);
+	m_credits.clear();
+
+	// Word Wrap
+	std::stringstream text(m_creditsText);
+	std::stringstream newText;
+	int lineWidth = GetScreenWidth() - 128;
+	int spaceWidth = MeasureText(" ", fontSize);
+	int spaceLeft = lineWidth;
+	for (std::string word; std::getline(text, word, ' '); )
+	{
+		if (MeasureText(word.c_str(), fontSize) + spaceWidth > spaceLeft)
+		{
+			newText << '\n';
+			newText << word;
+			spaceLeft = lineWidth - (MeasureText(word.c_str(), fontSize) + spaceWidth);
+		}
+		else
+		{
+			spaceLeft = spaceLeft - (MeasureText(word.c_str(), fontSize) + spaceWidth);
+			newText << word;
+		}
+		newText << ' ';
+	}
+
+	// Split lines into vector.
+	std::stringstream ss(newText.str());
 	for (std::string line; std::getline(ss, line, '\n'); )
 		m_credits.push_back(line);
 }

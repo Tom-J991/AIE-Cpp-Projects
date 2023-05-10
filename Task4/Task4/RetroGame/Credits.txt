@@ -13,9 +13,5 @@ Music -
 	https://creativecommons.org/publicdomain/zero/1.0/
 	- https://opengameart.org/content/4-chiptunes-adventure
 
-Pong is a registered trademark of Atari Interactive Inc., 
-this game is a fan-made work and is not affiliated 
-in any way with Atari Interactive Inc.
-
-All product names, brands and logos are or may be trademarks of and 
-are used to identify products and services of, their respective owners.
+Pong is a registered trademark of Atari Interactive Inc., this game is a fan-made work and is not affiliated in any way with Atari Interactive Inc.
+All product names, brands and logos are or may be trademarks of and are used to identify products and services of, their respective owners.

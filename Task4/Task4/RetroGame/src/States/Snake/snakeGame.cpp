@@ -9,8 +9,7 @@ namespace Snake
 		m_snakeHead = std::make_unique<SnakeHead>();
 	}
 	GameplayState::~GameplayState()
-	{
-	}
+	{ }
 
 	void GameplayState::OnEnter()
 	{
