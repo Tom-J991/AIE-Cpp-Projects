@@ -1,11 +1,16 @@
 TODO:
 More options.
-	- Custom Key mapping?
+	- Custom Key-mapping?
+	- Fullscreen?
 Better PONG.
 	- Better One Player AI.
 		- Move towards prediction instead of ball.
 Implement Snake Game.
-
+	- Smooth grid movement.
+	- Proper tail logic. (Growing, following head, etc)
+	- Self collision.
+	- Boundary/Wall collision.
+	- Score & Highscore.
 More Games.
 	- Arkanoid?
 	- Asteroids?

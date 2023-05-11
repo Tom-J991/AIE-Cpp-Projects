@@ -113,7 +113,14 @@ void MainMenuState::Draw()
 			optionText << option;
 
 			int optionOff = MeasureText(optionText.str().c_str(), 24) / 2;
-			DrawText(optionText.str().c_str(), (int)m_menuOffset + GetScreenWidth()/2 - optionOff, GetScreenHeight()/2 + (i*32), 24, WHITE);
+			int x = GetScreenWidth()/2 - optionOff;
+			int y = GetScreenHeight()/2 + (i*32);
+			if (j)
+			{
+				x += sinf(GetTime() * 8) * 4;
+				y += -cosf(GetTime() * 8) * 4;
+			}
+			DrawText(optionText.str().c_str(), (int)m_menuOffset + x, y, 24, WHITE);
 		}
 		// Misc
 		const int miscFontSize = 18;

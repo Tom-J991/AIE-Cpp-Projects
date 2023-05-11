@@ -180,7 +180,14 @@ void OptionsMenuState::Draw()
 
 			const int fontSize = m_optionsBold[(eOptions)i] ? 28 : 24;
 			int optionOff = MeasureText(optionText.str().c_str(), fontSize) / 2;
-			DrawText(optionText.str().c_str(), (int)m_menuOffset + GetScreenWidth() / 2 - optionOff, GetScreenHeight() / 2 + (i * 32), fontSize, WHITE);
+			int x = GetScreenWidth()/2 - optionOff;
+			int y = GetScreenHeight()/2 + (i*32);
+			if (j)
+			{
+				x += sinf(GetTime() * 8) * 4;
+				y += -cosf(GetTime() * 8) * 4;
+			}
+			DrawText(optionText.str().c_str(), (int)m_menuOffset + x, y, fontSize, WHITE);
 		}
 	}
 	EndDrawing();
