@@ -6,6 +6,8 @@ enum class eOptions
 {
 	MASTER_VOLUME = 0,
 	RESOLUTION,
+	FULLSCREEN,
+	KEYMAP,
 	BACK,
 	OPTIONS_MAX
 };
@@ -26,8 +28,8 @@ protected:
 	virtual bool MenuTransition(const eGameState &state, float deltaTime) override;
 
 private:
+	int m_activeIndex = -1;
 	std::map<eOptions, std::string> m_options;
-	std::map<eOptions, bool> m_optionsBold;
 
 	std::vector<std::pair<std::string, Vector2>> m_resolutions;
 	int m_resolutionIndex;

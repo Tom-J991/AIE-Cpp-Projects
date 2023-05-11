@@ -9,9 +9,11 @@
 
 enum class eGameState
 {
-	MENU = 0,
+	LOAD = 0,
+	MENU,
 	GAMELIST,
 	OPTIONS,
+	KEYMAP,
 	CREDITS,
 	PONG_MENU,
 	PONG_GAME,

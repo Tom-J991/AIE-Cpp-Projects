@@ -4,6 +4,14 @@
 
 #include "../../Game.h"
 
+// Globals.
+#include "KeyMaps.h"
+namespace Options
+{
+	extern std::unordered_map<ePongKeys, KeyboardKey> g_PongKeys;
+}
+using namespace Options;
+
 namespace Pong
 {
 	GameplayState::GameplayState()
@@ -67,7 +75,7 @@ namespace Pong
 		}
 
 		// Exit.
-		if (IsKeyReleased(KEY_ESCAPE))
+		if (IsKeyReleased(g_PongKeys[ePongKeys::QUITGAME]))
 			Game::Get().ChangeState(eGameState::PONG_MENU); // Go back.
 
 		return true;

@@ -1,8 +1,10 @@
 #include "Game.h"
 
+#include "States/LoadingState.h"
 #include "States/MainMenu/MainMenu.h"
 #include "States/MainMenu/GamesListMenu.h"
 #include "States/MainMenu/OptionsMenu.h"
+#include "States/MainMenu/KeymapMenu.h"
 #include "States/MainMenu/CreditsMenu.h"
 #include "States/Pong/pongMenu.h"
 #include "States/Pong/pongGame.h"
@@ -12,27 +14,35 @@
 namespace Options
 {
 	extern float g_MasterVolume;
+
+	extern bool g_Fullscreen;
 	extern unsigned int g_ScreenWidth;
 	extern unsigned int g_ScreenHeight;
 
 	extern void ReadOptions();
 }
+using namespace Options;
 
 Game* Game::m_instance = nullptr;
 Game::Game()
 {
 	InitAudioDevice();
 	// Initialize Settings
-	Options::ReadOptions();
-	SetMasterVolume(Options::g_MasterVolume);
-	SetWindowSize(Options::g_ScreenWidth, Options::g_ScreenHeight);
+	ReadOptions();
+	SetMasterVolume(g_MasterVolume);
+	SetWindowSize(g_ScreenWidth, g_ScreenHeight);
+
+	if (g_Fullscreen == true)
+		ToggleFullscreen();
 
 	// Initialize States
 	m_gameStateManager = std::make_unique<GameStateManager>((int)eGameState::STATES_MAX);
+	m_gameStateManager->RegisterState((int)eGameState::LOAD, new LoadingState(eGameState::MENU));
 	// Main Menu
 	m_gameStateManager->RegisterState((int)eGameState::MENU, new MainMenuState());
 	m_gameStateManager->RegisterState((int)eGameState::GAMELIST, new GamesListMenuState());
 	m_gameStateManager->RegisterState((int)eGameState::OPTIONS, new OptionsMenuState());
+	m_gameStateManager->RegisterState((int)eGameState::KEYMAP, new KeymapMenuState());
 	m_gameStateManager->RegisterState((int)eGameState::CREDITS, new CreditsMenuState());
 	// Pong
 	m_gameStateManager->RegisterState((int)eGameState::PONG_MENU, new Pong::TitleState());
@@ -40,8 +50,8 @@ Game::Game()
 	// Snake
 	m_gameStateManager->RegisterState((int)eGameState::SNAKE_GAME, new Snake::GameplayState());
 
-	// Goto Main Menu
-	m_gameStateManager->PushState((int)eGameState::MENU);
+	// Load Menu
+	m_gameStateManager->PushState((int)eGameState::LOAD);
 }
 Game::~Game()
 {

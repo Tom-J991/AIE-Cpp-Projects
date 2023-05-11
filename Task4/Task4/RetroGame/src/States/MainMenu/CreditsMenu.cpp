@@ -5,6 +5,14 @@
 #include <fstream>
 #include <iostream>
 
+// Globals.
+#include "KeyMaps.h"
+namespace Options
+{
+	extern std::unordered_map<eGeneralKeys, KeyboardKey> g_GeneralKeys;
+}
+using namespace Options;
+
 CreditsMenuState::CreditsMenuState()
 { 
 	MenuState::MenuState();
@@ -47,7 +55,7 @@ bool CreditsMenuState::Update(float deltaTime)
 		return false;
 
 	// Scrolling
-	if (IsKeyDown(KEY_ENTER))
+	if (IsKeyDown(g_GeneralKeys[eGeneralKeys::MENU_ACCEPT]))
 		m_scrollSpeed = 128;
 	else
 		m_scrollSpeed = 16;
@@ -60,7 +68,7 @@ bool CreditsMenuState::Update(float deltaTime)
 		GoBack();
 	}
 
-	if (IsKeyReleased(KEY_ESCAPE))
+	if (IsKeyReleased(g_GeneralKeys[eGeneralKeys::MENU_BACK]))
 	{
 		m_isTransition = true;
 		m_transitionDest = eGameState::MENU;

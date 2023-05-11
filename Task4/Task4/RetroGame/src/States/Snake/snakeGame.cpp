@@ -2,6 +2,14 @@
 
 #include "../../Game.h"
 
+// Globals.
+#include "KeyMaps.h"
+namespace Options
+{
+	extern std::unordered_map<eSnakeKeys, KeyboardKey> g_SnakeKeys;
+}
+using namespace Options;
+
 namespace Snake
 {
 	GameplayState::GameplayState()
@@ -32,8 +40,8 @@ namespace Snake
 	bool GameplayState::Update(float deltaTime)
 	{
 		// Get Input
-		int hMove = IsKeyPressed(KEY_RIGHT) - IsKeyPressed(KEY_LEFT);
-		int vMove = IsKeyPressed(KEY_DOWN) - IsKeyPressed(KEY_UP);
+		int hMove = IsKeyPressed(g_SnakeKeys[eSnakeKeys::MOVE_RIGHT]) - IsKeyPressed(g_SnakeKeys[eSnakeKeys::MOVE_LEFT]);
+		int vMove = IsKeyPressed(g_SnakeKeys[eSnakeKeys::MOVE_DOWN]) - IsKeyPressed(g_SnakeKeys[eSnakeKeys::MOVE_UP]);
 
 		// Snake Logic
 		for (int i = m_snakeLength; i > 0; i--)
@@ -62,7 +70,7 @@ namespace Snake
 		}
 
 		// Exit.
-		if (IsKeyReleased(KEY_ESCAPE))
+		if (IsKeyReleased(g_SnakeKeys[eSnakeKeys::QUITGAME]))
 			Game::Get().ChangeState(eGameState::GAMELIST); // Go back.
 
 		return true;

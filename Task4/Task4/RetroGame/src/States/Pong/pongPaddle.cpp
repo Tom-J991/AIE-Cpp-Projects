@@ -2,6 +2,14 @@
 
 #include "pongBall.h"
 
+// Globals.
+#include "KeyMaps.h"
+namespace Options
+{
+	extern std::unordered_map<ePongKeys, KeyboardKey> g_PongKeys;
+}
+using namespace Options;
+
 namespace Pong
 {
 	Paddle::Paddle(int player)
@@ -29,14 +37,14 @@ namespace Pong
 		if (m_player == 1)
 		{
 			m_pos = { (float)paddleOffset, (float)GetScreenHeight() / 2 };
-			m_controlMap[eControl::UP] = KEY_W;
-			m_controlMap[eControl::DOWN] = KEY_S;
+			m_controlMap[eControl::UP] = g_PongKeys[ePongKeys::FIRSTPLAYER_UP];
+			m_controlMap[eControl::DOWN] = g_PongKeys[ePongKeys::FIRSTPLAYER_DOWN];
 		}
 		else if (m_player == 2)
 		{
 			m_pos = { (float)GetScreenWidth() - paddleOffset, (float)GetScreenHeight() / 2 };
-			m_controlMap[eControl::UP] = KEY_UP;
-			m_controlMap[eControl::DOWN] = KEY_DOWN;
+			m_controlMap[eControl::UP] = g_PongKeys[ePongKeys::SECONDPLAYER_UP];
+			m_controlMap[eControl::DOWN] = g_PongKeys[ePongKeys::SECONDPLAYER_DOWN];
 		}
 	}
 

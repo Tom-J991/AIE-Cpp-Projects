@@ -1,7 +1,10 @@
 TODO:
-More options.
-	- Custom Key-mapping?
-	- Fullscreen?
+Load assets on Loading Screen.
+	- Music
+	- Sprites
+	- Etc.
+Implement Key-map Menu.
+	- List of keys based on category.
 Better PONG.
 	- Better One Player AI.
 		- Move towards prediction instead of ball.

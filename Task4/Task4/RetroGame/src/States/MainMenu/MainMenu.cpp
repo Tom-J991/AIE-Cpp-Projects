@@ -4,6 +4,14 @@
 #include "OptionsMenu.h"
 #include "CreditsMenu.h"
 
+// Globals.
+#include "KeyMaps.h"
+namespace Options
+{
+	extern std::unordered_map<eGeneralKeys, KeyboardKey> g_GeneralKeys;
+}
+using namespace Options;
+
 MainMenuState::MainMenuState()
 { 
 	MenuState::MenuState();
@@ -51,7 +59,7 @@ bool MainMenuState::Update(float deltaTime)
 		return false;
 
 	// Options
-	if (IsKeyReleased(KEY_ENTER))
+	if (IsKeyReleased(g_GeneralKeys[eGeneralKeys::MENU_ACCEPT]))
 	{
 		switch (m_index)
 		{
@@ -79,10 +87,10 @@ bool MainMenuState::Update(float deltaTime)
 		}
 	}
 
-	if (IsKeyReleased(KEY_ESCAPE))
+	if (IsKeyReleased(g_GeneralKeys[eGeneralKeys::MENU_BACK]))
 		Game::Get().Quit();
 
-	int dir = (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) - (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)); // Up or Down.
+	int dir = IsKeyPressed(g_GeneralKeys[eGeneralKeys::MENU_DOWN]) - IsKeyPressed(g_GeneralKeys[eGeneralKeys::MENU_UP]); // Up or Down.
 	m_index += dir;
 
 	if (m_index < 0) // Clamp Direction

@@ -60,6 +60,12 @@
     <ClCompile Include="src\States\Snake\snakeObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\States\MainMenu\KeymapMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\States\LoadingState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -108,6 +114,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\States\Snake\snakeObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\KeyMaps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\States\MainMenu\KeymapMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\States\LoadingState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

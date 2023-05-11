@@ -3,6 +3,14 @@
 #include "pongGame.h"
 #include "../MainMenu/GamesListMenu.h"
 
+// Globals.
+#include "KeyMaps.h"
+namespace Options
+{
+	extern std::unordered_map<eGeneralKeys, KeyboardKey> g_GeneralKeys;
+}
+using namespace Options;
+
 namespace Pong
 {
 	TitleState::TitleState()
@@ -33,7 +41,7 @@ namespace Pong
 			return false;
 
 		// Options
-		if (IsKeyReleased(KEY_ENTER))
+		if (IsKeyReleased(g_GeneralKeys[eGeneralKeys::MENU_ACCEPT]))
 		{
 			switch (m_index)
 			{
@@ -59,13 +67,13 @@ namespace Pong
 			}
 		}
 
-		if (IsKeyReleased(KEY_ESCAPE))
+		if (IsKeyReleased(g_GeneralKeys[eGeneralKeys::MENU_BACK]))
 		{
 			m_isTransition = true;
 			m_transitionDest = eGameState::GAMELIST;
 		}
 
-		int dir = (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) - (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)); // Up or Down.
+		int dir = IsKeyPressed(g_GeneralKeys[eGeneralKeys::MENU_DOWN]) - IsKeyPressed(g_GeneralKeys[eGeneralKeys::MENU_UP]); // Up or Down.
 		m_index += dir;
 
 		if (m_index < 0) // Clamp Direction
