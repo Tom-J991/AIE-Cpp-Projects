@@ -17,7 +17,7 @@ CreditsMenuState::CreditsMenuState()
 { 
 	MenuState::MenuState();
 
-	std::ifstream creditsFile("./Credits.txt");
+	std::ifstream creditsFile("./assets/Credits.txt");
 	if (!creditsFile.is_open())
 	{
 		std::cout << "Could not open Credits File" << std::endl;
