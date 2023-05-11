@@ -4,9 +4,10 @@ More options.
 Better PONG.
 	- Better One Player AI.
 		- Move towards prediction instead of ball.
+Implement Snake Game.
+
 More Games.
 	- Arkanoid?
-	- Snake?
 	- Asteroids?
 	- Space Invaders?
 	- Galaga/Galaxian?

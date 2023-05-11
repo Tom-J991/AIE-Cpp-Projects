@@ -5,9 +5,7 @@
 
 #include "../../GameState.h"
 
-#include "snakeHead.h"
-#include "snakeTail.h"
-
+#include "snakeObject.h"
 #include <raylib.h>
 #include <raymath.h>
 
@@ -26,8 +24,16 @@ namespace Snake
 		virtual void Draw() override;
 
 	private:
-		std::unique_ptr<SnakeHead> m_snakeHead;
-		std::vector<std::unique_ptr<SnakeTail>> m_snakeTail;
+		Vector2 FruitLocation();
+
+	private:
+		bool m_gameEnd = false;
+
+		std::vector<SnakeObject*> m_snake;
+		int m_snakeLength = 0;
+
+		Vector2 m_fruitLoc;
+		Vector2 m_fruitSize;
 
 	};
 

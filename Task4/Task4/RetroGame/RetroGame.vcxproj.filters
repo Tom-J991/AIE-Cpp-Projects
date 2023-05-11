@@ -57,10 +57,7 @@
     <ClCompile Include="src\States\Snake\snakeGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\States\Snake\snakeHead.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\States\Snake\snakeTail.cpp">
+    <ClCompile Include="src\States\Snake\snakeObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -108,12 +105,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\States\Snake\snakeGame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\States\Snake\snakeHead.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\States\Snake\snakeTail.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\States\Snake\snakeObject.h">
