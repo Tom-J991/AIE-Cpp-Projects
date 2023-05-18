@@ -220,8 +220,8 @@ void KeymapMenuState::Draw()
 			if (j)
 			{
 				// Wobble when highlighted.
-				x += sinf(GetTime() * 8) * 4;
-				y += -cosf(GetTime() * 8) * 4;
+				x += (int)(sinf((float)GetTime() * 8) * 4);
+				y += (int)(-cosf((float)GetTime() * 8) * 4);
 			}
 			DrawText(optionText.str().c_str(), (int)m_menuOffset + x, y, fontSize, WHITE);
 		}

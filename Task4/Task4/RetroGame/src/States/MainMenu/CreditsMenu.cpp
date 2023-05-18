@@ -56,13 +56,13 @@ bool CreditsMenuState::Update(float deltaTime)
 
 	// Scrolling
 	if (IsKeyDown(g_GeneralKeys[eGeneralKeys::MENU_ACCEPT]))
-		m_scrollSpeed = 128;
+		m_scrollSpeed = 256;
 	else
-		m_scrollSpeed = 16;
+		m_scrollSpeed = 32;
 	m_scroll -= m_scrollSpeed * deltaTime;
 
 	const float end = (float)(m_credits.size() * m_fontSize);
-	if (m_scroll <= 0 - (end + (m_fontSize)))
+	if (m_scroll <= 0 - (end - (m_fontSize * 4)))
 	{
 		m_menuOffset = (float)-GetScreenWidth();
 		GoBack();
@@ -85,8 +85,13 @@ void CreditsMenuState::Draw()
 		// Draw Credits text (line by line)
 		for (int i = 0; i < m_credits.size(); i++)
 		{
-			int creditsOff = MeasureText(m_credits[i].c_str(), m_fontSize) / 2;
-			DrawText(m_credits[i].c_str(), (int)m_menuOffset + GetScreenWidth() / 2 - creditsOff, (int)m_scroll + (i * m_fontSize), m_fontSize, WHITE);
+			const int creditsOff = MeasureText(m_credits[i].c_str(), m_fontSize) / 2;
+			int x = (int)m_menuOffset + GetScreenWidth() / 2 - creditsOff;
+			int y = (int)m_scroll + (i * m_fontSize);
+			const float distToTop = (float)(GetScreenHeight() / 8);
+			float alpha = (y - distToTop) / distToTop;
+			Color c = ColorAlpha(WHITE, alpha);
+			DrawText(m_credits[i].c_str(), x, y, m_fontSize, c);
 		}
 	}
 	EndDrawing();

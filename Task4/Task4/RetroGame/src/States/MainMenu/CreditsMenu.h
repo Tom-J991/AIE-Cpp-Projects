@@ -24,7 +24,7 @@ private:
 private:
 	const int m_fontSize = 20;
 	float m_scroll = (float)GetScreenHeight()/2;
-	float m_scrollSpeed = 16;
+	float m_scrollSpeed = 32;
 	std::string m_creditsText;
 	std::vector<std::string> m_credits;
 
