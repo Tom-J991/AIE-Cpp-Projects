@@ -100,6 +100,7 @@ namespace Pong
 					pos.x + (size.x/2) >= paddle.Position().x - (paddle.Size().x/2);
 		bool collY = pos.y - (size.y/2) <= paddle.Position().y + (paddle.Size().y/2) &&
 					pos.y + (size.y/2) >= paddle.Position().y - (paddle.Size().y/2);
+		m_speed *= 1.1f;
 		return collX && collY;
 	}
 

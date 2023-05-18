@@ -84,7 +84,14 @@ bool KeymapMenuState::Update(float deltaTime)
 	{
 		m_activeIndex = m_index;
 		auto newKey = GetKeyPressed();
-		if (newKey)
+		if (newKey == g_GeneralKeys[eGeneralKeys::MENU_BACK])
+		{
+			newKey = 0;
+			m_activeIndex = -1;
+			changeKey = false;
+			return false;
+		}
+		if (newKey > 0)
 		{
 			switch (m_currentCategory)
 			{
@@ -104,7 +111,7 @@ bool KeymapMenuState::Update(float deltaTime)
 					break;
 			}
 			m_activeIndex = -1;
-			changeKey = !changeKey;
+			changeKey = false;
 		}
 	}
 
