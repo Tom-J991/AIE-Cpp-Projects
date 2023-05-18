@@ -105,7 +105,7 @@ namespace Snake
 			DrawRectangle(0, 0, m_gridWidth * m_cellSize, m_gridHeight * m_cellSize, DARKGREEN);
 			// Snake
 			for (auto snake : m_snake)
-				DrawRectangle((int)snake.x * m_cellSize, (int)snake.y * m_cellSize, m_cellSize, m_cellSize, BLUE);
+				DrawRectangle((int)(snake.x * m_cellSize), (int)(snake.y * m_cellSize), m_cellSize, m_cellSize, BLUE);
 			// Fruit
 			DrawRectangle((int)m_fruitLoc.x * m_cellSize, (int)m_fruitLoc.y * m_cellSize, m_cellSize, m_cellSize, RED);
 		}

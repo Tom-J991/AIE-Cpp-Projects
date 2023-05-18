@@ -35,8 +35,8 @@ namespace Snake
 		std::vector<Vector2> m_snake;
 		Vector2 m_dir;
 		Vector2 m_desiredLoc;
-		float m_snakeSpeed = 0.10f;
 		int m_snakeLength = 0;
+		float m_snakeSpeed = 0.12f;
 
 		Vector2 m_fruitLoc;
 
