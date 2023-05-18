@@ -35,6 +35,9 @@ protected:
 	virtual bool MenuTransition(const eGameState &state, float deltaTime) override;
 
 private:
+	void GetMaxOptions();
+
+private:
 	int m_maxOptions;
 	int m_activeIndex = -1;
 
