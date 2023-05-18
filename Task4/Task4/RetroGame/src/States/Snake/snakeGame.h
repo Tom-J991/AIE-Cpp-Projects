@@ -5,7 +5,6 @@
 
 #include "../../GameState.h"
 
-#include "snakeObject.h"
 #include <raylib.h>
 #include <raymath.h>
 
@@ -29,11 +28,17 @@ namespace Snake
 	private:
 		bool m_gameEnd = false;
 
-		std::vector<SnakeObject*> m_snake;
+		int m_gridWidth = 16;
+		int m_gridHeight = 16;
+		int m_cellSize;
+
+		std::vector<Vector2> m_snake;
+		Vector2 m_dir;
+		Vector2 m_desiredLoc;
+		float m_snakeSpeed = 0.10f;
 		int m_snakeLength = 0;
 
 		Vector2 m_fruitLoc;
-		Vector2 m_fruitSize;
 
 	};
 

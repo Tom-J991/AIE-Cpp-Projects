@@ -261,7 +261,6 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\States\MainMenu\MainMenu.cpp" />
     <ClCompile Include="src\States\Snake\snakeGame.cpp" />
-    <ClCompile Include="src\States\Snake\snakeObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
@@ -281,7 +280,6 @@
     <ClInclude Include="src\States\Pong\pongPaddle.h" />
     <ClInclude Include="src\States\MainMenu\MainMenu.h" />
     <ClInclude Include="src\States\Snake\snakeGame.h" />
-    <ClInclude Include="src\States\Snake\snakeObject.h" />
     <ClInclude Include="src\States\StarParticle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
