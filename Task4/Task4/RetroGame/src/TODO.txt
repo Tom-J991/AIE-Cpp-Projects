@@ -11,6 +11,7 @@ Implement Snake Game.
 	- Self collision.
 	- Boundary/Wall collision.
 	- Score & Highscore.
+	- Sprite Graphics.
 More Games.
 	- Arkanoid?
 	- Asteroids?

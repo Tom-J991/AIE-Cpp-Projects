@@ -1,12 +1,11 @@
 #pragma once
 
-#include <vector>
 #include <memory>
 
 #include "../../GameState.h"
 
-#include <raylib.h>
-#include <raymath.h>
+#include "snakeBody.h"
+#include "snakeFruit.h"
 
 namespace Snake
 {
@@ -23,22 +22,14 @@ namespace Snake
 		virtual void Draw() override;
 
 	private:
-		Vector2 FruitLocation();
-
-	private:
 		bool m_gameEnd = false;
 
-		int m_gridWidth = 16;
-		int m_gridHeight = 16;
+		int m_gridWidth;
+		int m_gridHeight;
 		int m_cellSize;
 
-		std::vector<Vector2> m_snake;
-		Vector2 m_dir;
-		Vector2 m_desiredLoc;
-		int m_snakeLength = 0;
-		float m_snakeSpeed = 0.12f;
-
-		Vector2 m_fruitLoc;
+		std::unique_ptr<Snake> m_snake;
+		std::unique_ptr<Fruit> m_fruit;
 
 	};
 
