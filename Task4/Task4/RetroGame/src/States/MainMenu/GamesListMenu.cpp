@@ -4,16 +4,11 @@
 
 // Globals.
 #include "KeyMaps.h"
-namespace Options
-{
-	extern std::unordered_map<eGeneralKeys, KeyboardKey> g_GeneralKeys;
-}
+#include "Options.h"
 using namespace Options;
 
 GamesListMenuState::GamesListMenuState()
 { 
-	MenuState::MenuState();
-
 	m_games.insert(std::pair<eGames, std::string>(eGames::PONG, "PONG"));
 	m_games.insert(std::pair<eGames, std::string>(eGames::SNAKE, "SNAKE"));
 	m_games.insert(std::pair<eGames, std::string>(eGames::BACK, "Go Back"));

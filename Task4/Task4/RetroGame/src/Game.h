@@ -41,12 +41,14 @@ public:
 	int ActiveStateCount() const { return (int)m_gameStateManager->ActiveStateCount(); }
 	GameState *GetState(int id) const { return m_gameStateManager->GetState(id); }
 
+	// Singleton. Get Instance
 	static Game &Get() {
 		if (m_instance == nullptr) // Don't recreate itself if it already exists.
 			m_instance = new Game(); 
 		return *m_instance; 
 	};
 
+	// Destroy Instance
 	static void Destroy()
 	{
 		if (m_instance != nullptr) // Don't try to delete if it doesn't exist.

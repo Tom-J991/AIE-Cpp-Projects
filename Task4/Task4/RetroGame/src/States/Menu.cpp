@@ -66,17 +66,6 @@ bool MenuState::Update(float deltaTime)
 
 	return true;
 }
-void MenuState::Draw()
-{
-	BeginDrawing();
-	ClearBackground(BLACK);
-	{
-		DrawParticles();
-		//
-		DrawFade();
-	}
-	EndDrawing();
-}
 
 bool MenuState::MenuTransition(const eGameState &state, float deltaTime)
 {

@@ -5,8 +5,9 @@ namespace Options
 	void ReadOptions()
 	{
 		std::ifstream optionsFile("./game_options.dat", std::ios::binary);
-		if (!optionsFile.is_open())
+		if (!optionsFile.is_open()) // Can't read file, and/or file doesn't exist.
 		{
+			optionsFile.close();
 			// Set and Write Defaults
 
 			// Settings

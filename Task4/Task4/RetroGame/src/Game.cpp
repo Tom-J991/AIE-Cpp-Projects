@@ -1,5 +1,6 @@
 #include "Game.h"
 
+// Game States
 #include "States/LoadingState.h"
 #include "States/MainMenu/MainMenu.h"
 #include "States/MainMenu/GamesListMenu.h"
@@ -11,16 +12,7 @@
 #include "States/Snake/snakeGame.h"
 
 // Globals.
-namespace Options
-{
-	extern float g_MasterVolume;
-
-	extern bool g_Fullscreen;
-	extern unsigned int g_ScreenWidth;
-	extern unsigned int g_ScreenHeight;
-
-	extern void ReadOptions();
-}
+#include "Options.h"
 using namespace Options;
 
 Game* Game::m_instance = nullptr;
@@ -50,7 +42,7 @@ Game::Game()
 	// Snake
 	m_gameStateManager->RegisterState((int)eGameState::SNAKE_GAME, new Snake::GameplayState());
 
-	// Load Menu
+	// Load First State
 	m_gameStateManager->PushState((int)eGameState::LOAD);
 }
 Game::~Game()

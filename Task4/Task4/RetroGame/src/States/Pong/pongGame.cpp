@@ -6,10 +6,7 @@
 
 // Globals.
 #include "KeyMaps.h"
-namespace Options
-{
-	extern std::unordered_map<ePongKeys, KeyboardKey> g_PongKeys;
-}
+#include "Options.h"
 using namespace Options;
 
 namespace Pong

@@ -5,18 +5,13 @@
 
 // Globals.
 #include "KeyMaps.h"
-namespace Options
-{
-	extern std::unordered_map<eGeneralKeys, KeyboardKey> g_GeneralKeys;
-}
+#include "Options.h"
 using namespace Options;
 
 namespace Pong
 {
 	TitleState::TitleState()
 	{
-		MenuState::MenuState();
-
 		m_modes.insert(std::pair<eModes, std::string>(eModes::ONEPLAYER, "ONE PLAYER"));
 		m_modes.insert(std::pair<eModes, std::string>(eModes::TWOPLAYER, "TWO PLAYER"));
 		m_modes.insert(std::pair<eModes, std::string>(eModes::QUIT, "QUIT"));

@@ -4,10 +4,7 @@
 
 // Globals.
 #include "KeyMaps.h"
-namespace Options
-{
-	extern std::unordered_map<eSnakeKeys, KeyboardKey> g_SnakeKeys;
-}
+#include "Options.h"
 using namespace Options;
 
 Vector2 tmpPos;
@@ -34,7 +31,7 @@ namespace Snake
 		m_length = 3;
 		m_dir = { 0, 0 };
 
-		tmpDest = m_body.front();
+		tmpDest = m_body.front(); // Initialize destination for movement
 	}
 
 	void Snake::Move(float deltaTime)
@@ -81,11 +78,11 @@ namespace Snake
 	bool Snake::MoveInDirection(Vector2 &start, const Vector2 &dir, float deltaTime)
 	{
 		bool moved = false;
-		if (start.x != tmpDest.x || start.y != tmpDest.y)
+		if (start.x != tmpDest.x || start.y != tmpDest.y) // Hasn't reached destination.
 		{
-			// Interpolate to desired location.
-			if (moveTime < m_speed)
+			if (moveTime < m_speed) 
 			{
+				// Interpolate to desired location.
 				float t = moveTime / m_speed;
 				start.x = Lerp(tmpPos.x, tmpDest.x, t);
 				start.y = Lerp(tmpPos.y, tmpDest.y, t);
@@ -93,16 +90,23 @@ namespace Snake
 			}
 			else
 			{
+				// Snap to destination.
 				start.x = tmpDest.x;
 				start.y = tmpDest.y;
+
 				moved = true;
 			}
 		}
 		else
 		{
+			// Reset
 			moveTime = 0;
 			tmpPos = start;
 			tmpDest = { tmpPos.x+dir.x, tmpPos.y+dir.y };
+			// Clamp to border
+			if (tmpDest.x < 0 || tmpDest.x > m_gridWidth-1 ||
+				tmpDest.y < 0 || tmpDest.y > m_gridHeight-1)
+				tmpDest = tmpPos;
 		}
 		return moved;
 	}

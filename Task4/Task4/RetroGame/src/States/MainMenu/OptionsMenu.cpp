@@ -5,24 +5,11 @@
 
 // Globals.
 #include "KeyMaps.h"
-namespace Options
-{
-	extern float g_MasterVolume;
-
-	extern bool g_Fullscreen;
-	extern unsigned int g_ScreenWidth;
-	extern unsigned int g_ScreenHeight;
-
-	extern std::unordered_map<eGeneralKeys, KeyboardKey> g_GeneralKeys;
-
-	extern void WriteOptions();
-}
+#include "Options.h"
 using namespace Options;
 
 OptionsMenuState::OptionsMenuState()
 { 
-	MenuState::MenuState();
-
 	// Initalize Options
 	m_options.insert(std::pair<eOptions, std::string>(eOptions::MASTER_VOLUME, "Master Volume: "));
 	m_options.insert(std::pair<eOptions, std::string>(eOptions::RESOLUTION, "Resolution: "));

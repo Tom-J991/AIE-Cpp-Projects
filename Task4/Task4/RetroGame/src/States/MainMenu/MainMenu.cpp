@@ -6,16 +6,11 @@
 
 // Globals.
 #include "KeyMaps.h"
-namespace Options
-{
-	extern std::unordered_map<eGeneralKeys, KeyboardKey> g_GeneralKeys;
-}
+#include "Options.h"
 using namespace Options;
 
 MainMenuState::MainMenuState()
 { 
-	MenuState::MenuState();
-
 	// Setup Particles
 	m_particles = new std::vector<Star>();
 	m_particles->resize(m_particleCount);

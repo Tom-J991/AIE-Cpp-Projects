@@ -2,6 +2,7 @@
 
 #include <raylib.h>
 
+// Star particle object for menu background.
 struct Star
 {
 	Vector2 position = { -1, -1 };

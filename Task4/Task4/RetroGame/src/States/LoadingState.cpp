@@ -10,6 +10,7 @@ LoadingState::~LoadingState()
 
 void LoadingState::OnEnter()
 {
+	// TODO: Load things here.
 }
 void LoadingState::OnExit()
 {
@@ -17,7 +18,7 @@ void LoadingState::OnExit()
 
 bool LoadingState::Update(float deltaTime)
 {
-	// Goto Main Menu when done loading.
+	// Goto destination when done loading.
 	Game::Get().ChangeState(m_destination);
 
 	return false;

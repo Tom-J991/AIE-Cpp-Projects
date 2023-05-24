@@ -7,6 +7,7 @@ Better PONG.
 	- Better One Player AI.
 		- Move towards prediction instead of ball.
 Implement Snake Game.
+	- Snake Menu.
 	- Proper tail logic. (Growing, following head, etc)
 	- Self collision.
 	- Boundary/Wall collision.

@@ -11,7 +11,7 @@ namespace Snake
 		~Fruit();
 
 		void Init();
-		void Draw();
+		void Draw(Texture2D *tex);
 
 		Vector2 &Position() { return m_pos; }
 

@@ -7,16 +7,11 @@
 
 // Globals.
 #include "KeyMaps.h"
-namespace Options
-{
-	extern std::unordered_map<eGeneralKeys, KeyboardKey> g_GeneralKeys;
-}
+#include "Options.h"
 using namespace Options;
 
 CreditsMenuState::CreditsMenuState()
 { 
-	MenuState::MenuState();
-
 	std::ifstream creditsFile("./assets/Credits.txt");
 	if (!creditsFile.is_open())
 	{

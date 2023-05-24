@@ -23,8 +23,9 @@ public:
 	virtual void OnExit() override;
 
 	virtual bool Update(float deltaTime) override;
-	virtual void Draw() override;
+	virtual void Draw() = 0;
 
+	// Pass objects across different menus for consistency.
 	virtual void PassParticles(std::vector<Star> *particles) { m_particles = particles; }
 	virtual void PassMusic(const Music &music) { m_titleMusic = music; }
 
@@ -38,9 +39,13 @@ protected:
 protected:
 	int m_index = 0;
 
+	// Menu Objects
 	const int m_particleCount = 1024;
 	std::vector<Star> *m_particles;
 
+	Music m_titleMusic;
+
+	// Transition
 	bool m_isTransition = false;
 	bool m_isReturning = false;
 	bool m_isFading = false;
@@ -49,7 +54,5 @@ protected:
 	float m_menuOffset = (float)GetScreenWidth();
 	float m_fadeOpacity = 0;
 	float m_musicVolume = 1.0f;
-
-	Music m_titleMusic;
 
 };

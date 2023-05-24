@@ -7,10 +7,7 @@
 
 // Globals.
 #include "KeyMaps.h"
-namespace Options
-{
-	extern std::unordered_map<eSnakeKeys, KeyboardKey> g_SnakeKeys;
-}
+#include "Options.h"
 using namespace Options;
 
 namespace Snake
@@ -25,8 +22,11 @@ namespace Snake
 	{
 		m_gameEnd = false;
 
+		// Load Assets.
+		m_loadedTextures.insert(std::pair<const char*, Texture2D>("FRUIT", LoadTexture("./assets/gfx/snake/apple.png")));
+
 		// Initialize Grid.
-		float ratio = GetScreenWidth() / GetScreenHeight();
+		float ratio = (float)(GetScreenWidth() / GetScreenHeight());
 		if (ratio > 1)
 			ratio = 1 / ratio;
 		m_gridWidth = (int)(GetScreenWidth() / (50.f * ratio));
@@ -45,6 +45,11 @@ namespace Snake
 	}
 	void GameplayState::OnExit()
 	{
+		for (auto[key, tex] : m_loadedTextures)
+		{
+			if (IsTextureReady(tex))
+				UnloadTexture(tex);
+		}
 	}
 
 	bool GameplayState::Update(float deltaTime)
@@ -69,8 +74,8 @@ namespace Snake
 			// Background
 			DrawRectangle(0, 0, m_gridWidth * m_cellSize, m_gridHeight * m_cellSize, DARKGREEN);
 			// Objects
+			m_fruit->Draw(&m_loadedTextures["FRUIT"]);
 			m_snake->Draw();
-			m_fruit->Draw();
 		}
 		EndDrawing();
 	}

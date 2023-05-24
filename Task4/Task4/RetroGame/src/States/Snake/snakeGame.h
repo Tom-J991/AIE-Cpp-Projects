@@ -1,6 +1,8 @@
 #pragma once
 
 #include <memory>
+#include <unordered_map>
+#include <utility>
 
 #include "../../GameState.h"
 
@@ -30,6 +32,8 @@ namespace Snake
 
 		std::unique_ptr<Snake> m_snake;
 		std::unique_ptr<Fruit> m_fruit;
+
+		std::unordered_map<const char*, Texture2D> m_loadedTextures;
 
 	};
 

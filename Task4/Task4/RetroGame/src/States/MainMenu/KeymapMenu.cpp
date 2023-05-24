@@ -3,20 +3,12 @@
 #include "OptionsMenu.h"
 
 // Globals.
-namespace Options
-{
-	extern std::unordered_map<eGeneralKeys, KeyboardKey> g_GeneralKeys;
-	extern std::unordered_map<ePongKeys, KeyboardKey> g_PongKeys;
-	extern std::unordered_map<eSnakeKeys, KeyboardKey> g_SnakeKeys;
-
-	extern void WriteOptions();
-}
+#include "KeyMaps.h"
+#include "Options.h"
 using namespace Options;
 
 KeymapMenuState::KeymapMenuState()
 {
-	MenuState::MenuState();
-
 	// Initalize Options
 	m_options.insert(std::pair<eKeyOptions, std::string>(eKeyOptions::CATEGORY, "CATEGORY: "));
 	m_options.insert(std::pair<eKeyOptions, std::string>(eKeyOptions::BACK, "Go Back"));
