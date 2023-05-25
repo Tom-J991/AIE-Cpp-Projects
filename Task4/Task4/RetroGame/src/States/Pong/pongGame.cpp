@@ -26,9 +26,9 @@ namespace Pong
 	void GameplayState::OnEnter()
 	{
 		// Load Assets
-		m_loadedSounds[(int)eSounds::BOUNCE] = LoadSound("./assets/sfx/Pong/ball_bounce.ogg");
-		m_loadedSounds[(int)eSounds::BOUNDS] = LoadSound("./assets/sfx/Pong/ball_bounds.ogg");
-		m_loadedSounds[(int)eSounds::SCORE] = LoadSound("./assets/sfx/Pong/score.ogg");
+		m_loadedSounds[(int)eSounds::BOUNCE] = LoadSound("./assets/sfx/pong/ball_bounce.ogg");
+		m_loadedSounds[(int)eSounds::BOUNDS] = LoadSound("./assets/sfx/pong/ball_bounds.ogg");
+		m_loadedSounds[(int)eSounds::SCORE] = LoadSound("./assets/sfx/pong/score.ogg");
 
 		// Initialize
 		m_ball->Init();

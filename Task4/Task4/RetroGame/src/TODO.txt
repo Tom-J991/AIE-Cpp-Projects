@@ -11,6 +11,7 @@ Better PONG.
 Implement Snake Game.
 	- Snake Menu.
 	- Smooth Grid Movement.
+	- Sound effects.
 	- Highscore.
 More Games.
 	- Arkanoid?

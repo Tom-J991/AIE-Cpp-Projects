@@ -75,11 +75,12 @@ namespace Snake
 		{
 			for (int i = 0; i < m_body.size(); i++)
 			{
-				// TODO: Fix sprites not connecting properly when changing directions.
+				// TODO: Fix head sprite not connecting properly to body when changing directions.
 				auto &snake = m_body[i];
 				Texture2D *tex = nullptr;
 				if (snake.pos.x == m_pos.x && snake.pos.y == m_pos.y) // Is head
 				{
+					// Check direction.
 					if (m_dir.x == 1)
 						tex = &textures[(int)eSprites::SNAKE_HEAD_R];
 					else if (m_dir.x == -1)
@@ -88,34 +89,38 @@ namespace Snake
 						tex = &textures[(int)eSprites::SNAKE_HEAD_D];
 					else if (m_dir.y == -1)
 						tex = &textures[(int)eSprites::SNAKE_HEAD_U];
-					else // Still
+					else // Default
 						tex = &textures[(int)eSprites::SNAKE_HEAD_R];
 				}
 				else if (snake.pos.x == m_body.front().pos.x && snake.pos.y == m_body.front().pos.y) // Is tail
 				{
-					if (snake.dir.x == 1)
+					auto &nextPart = m_body[i+1];
+					// Check direction.
+					if (nextPart.dir.x == 1)
 						tex = &textures[(int)eSprites::SNAKE_TAIL_L];
-					else if (snake.dir.x == -1)
+					else if (nextPart.dir.x == -1)
 						tex = &textures[(int)eSprites::SNAKE_TAIL_R];
-					else if (snake.dir.y == 1)
+					else if (nextPart.dir.y == 1)
 						tex = &textures[(int)eSprites::SNAKE_TAIL_U];
-					else if (snake.dir.y == -1)
+					else if (nextPart.dir.y == -1)
 						tex = &textures[(int)eSprites::SNAKE_TAIL_D];
-					else // Still
+					else // Default
 						tex = &textures[(int)eSprites::SNAKE_TAIL_L];
 				}
 				else // Is body
 				{
 					auto &prevPart = m_body[i-1];
 					auto &nextPart = m_body[i+1];
-					// TODO: Better way of doing all of this?
-					// Check if part is in line and which direction
+
+					// TODO: Better way of doing all of this? Really messy.
+					// Check if body part is in line and which direction
 					if ((prevPart.pos.x == snake.pos.x-1 && prevPart.pos.y == snake.pos.y) || // Check Left
 						(prevPart.pos.x == snake.pos.x+1 && prevPart.pos.y == snake.pos.y)) // Check Right
 						tex = &textures[(int)eSprites::SNAKE_BODY_H];
 					else if ((prevPart.pos.x == snake.pos.x && prevPart.pos.y == snake.pos.y-1) || // Check Up
 							(prevPart.pos.x == snake.pos.x && prevPart.pos.y == snake.pos.y+1)) // Check Down
 						tex = &textures[(int)eSprites::SNAKE_BODY_V];
+
 					// Check corners
 					if ((prevPart.pos.x == snake.pos.x-1 && prevPart.pos.y == snake.pos.y && // Check Previous to left
 						nextPart.pos.x == snake.pos.x && nextPart.pos.y == snake.pos.y-1) || // Check next is above
@@ -155,7 +160,7 @@ namespace Snake
 		if (m_body.empty())
 			return false;
 
-		const Vector2 adjPos = { m_body.front().pos.x*m_cellSize, m_body.front().pos.y*m_cellSize };
+		const Vector2 adjPos = { m_body.back().pos.x*m_cellSize, m_body.back().pos.y*m_cellSize };
 		const Vector2 adjFPos = { fruit.Position().x*m_cellSize, fruit.Position().y*m_cellSize };
 		if (adjPos.x == adjFPos.x && adjPos.y == adjFPos.y)
 		{
