@@ -27,6 +27,7 @@ int main()
 
 	// Close
 	game.Destroy();
+	CloseWindow();
 
 	return 0;
 }

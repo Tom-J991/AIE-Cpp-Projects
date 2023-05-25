@@ -22,14 +22,15 @@ namespace Snake
 
 	void Snake::Init()
 	{
-		m_pos = { 4, 8 };
+		m_pos = { 4, (float)trunc(m_gridHeight/3) };
 		m_dir = { 0, 0 };
-		m_length = 3;
+		m_length = 4;
 
 		m_justStarted = true;
 
 		// Init snake body.
 		m_body.clear();
+		m_body.push_back({ { m_pos.x-3, m_pos.y }, m_dir });
 		m_body.push_back({ { m_pos.x-2, m_pos.y }, m_dir });
 		m_body.push_back({ { m_pos.x-1, m_pos.y }, m_dir });
 		m_body.push_back({ m_pos, m_dir });
@@ -37,7 +38,7 @@ namespace Snake
 		g_moveTime = (float)GetTime(); // Initialize movement timer.
 	}
 
-	void Snake::Move(float deltaTime)
+	void Snake::Move(std::vector<Sound> &sounds, float deltaTime)
 	{
 		// Get Input
 		int hMove = IsKeyPressed(g_SnakeKeys[eSnakeKeys::MOVE_RIGHT]) - IsKeyPressed(g_SnakeKeys[eSnakeKeys::MOVE_LEFT]);
@@ -52,6 +53,11 @@ namespace Snake
 				m_dir.x = (float)hMove;
 			m_dir.y = 0; // Reset
 
+			if (hMove == 1) // Right
+				PlaySFX(sounds, eSounds::SNAKE_RIGHT);
+			else if (hMove == -1) // Left
+				PlaySFX(sounds, eSounds::SNAKE_LEFT);
+
 			m_justStarted = false;
 		}
 		if (vMove != 0) // Set vertical direction.
@@ -61,6 +67,11 @@ namespace Snake
 				m_dir.y = (float)vMove;
 			else if (m_dir.y == vMove)
 				m_dir.y = (float)vMove;
+
+			if (vMove == 1) // DOWN
+				PlaySFX(sounds, eSounds::SNAKE_DOWN);
+			else if (vMove == -1) // UP
+				PlaySFX(sounds, eSounds::SNAKE_UP);
 
 			m_justStarted = false;
 		}
@@ -90,19 +101,18 @@ namespace Snake
 		{
 			for (int i = 0; i < m_body.size(); i++)
 			{
-				// TODO: Fix head sprite not connecting properly to body when changing directions.
 				auto &snake = m_body[i];
 				Texture2D *tex = nullptr;
 				if (snake.pos.x == m_pos.x && snake.pos.y == m_pos.y) // Is head
 				{
 					// Check direction.
-					if (m_dir.x == 1)
+					if (snake.dir.x == 1)
 						tex = &textures[(int)eSprites::SNAKE_HEAD_R];
-					else if (m_dir.x == -1)
+					else if (snake.dir.x == -1)
 						tex = &textures[(int)eSprites::SNAKE_HEAD_L];
-					else if (m_dir.y == 1)
+					else if (snake.dir.y == 1)
 						tex = &textures[(int)eSprites::SNAKE_HEAD_D];
-					else if (m_dir.y == -1)
+					else if (snake.dir.y == -1)
 						tex = &textures[(int)eSprites::SNAKE_HEAD_U];
 					else // Default
 						tex = &textures[(int)eSprites::SNAKE_HEAD_R];
@@ -208,6 +218,12 @@ namespace Snake
 		}
 
 		return false;
+	}
+
+	void Snake::PlaySFX(std::vector<Sound> &sounds, eSounds sound)
+	{
+		if (IsSoundReady(sounds[(int)sound]))
+			PlaySound(sounds[(int)sound]);
 	}
 
 }

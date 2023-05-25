@@ -8,6 +8,7 @@
 namespace Snake
 {
 	class Fruit;
+	enum class eSounds;
 
 	struct SnakeBody
 	{
@@ -22,7 +23,7 @@ namespace Snake
 		~Snake();
 
 		void Init();
-		void Move(float deltaTime);
+		void Move(std::vector<Sound> &sounds, float deltaTime);
 		void Draw(std::vector<Texture2D> &textures);
 
 		bool EatFruit(Fruit &fruit);
@@ -31,6 +32,9 @@ namespace Snake
 		bool CheckCollSelf();
 
 		std::vector<SnakeBody> &Body() { return m_body; }
+
+	private:
+		void PlaySFX(std::vector<Sound> &sounds, eSounds sound);
 
 	private:
 		std::vector<SnakeBody> m_body;

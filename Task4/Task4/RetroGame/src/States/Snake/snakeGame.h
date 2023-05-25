@@ -34,6 +34,19 @@ namespace Snake
 		SPRITES_MAX
 	};
 
+	enum class eSounds
+	{
+		FRUIT = 0,
+		GAMEOVER,
+
+		SNAKE_UP,
+		SNAKE_DOWN,
+		SNAKE_LEFT,
+		SNAKE_RIGHT,
+
+		SOUNDS_MAX
+	};
+
 	class GameplayState : public GameState
 	{
 	public:
@@ -49,6 +62,9 @@ namespace Snake
 		void Init();
 
 	private:
+		void PlaySFX(eSounds sound);
+
+	private:
 		bool m_gameEnd = false;
 		int m_score;
 
@@ -60,6 +76,7 @@ namespace Snake
 		std::unique_ptr<Fruit> m_fruit;
 
 		std::vector<Texture2D> m_loadedSprites;
+		std::vector<Sound> m_loadedSounds;
 
 	};
 

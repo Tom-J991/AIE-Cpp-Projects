@@ -15,6 +15,7 @@ namespace Snake
 	GameplayState::GameplayState()
 	{ 
 		m_loadedSprites.resize((int)eSprites::SPRITES_MAX);
+		m_loadedSounds.resize((int)eSounds::SOUNDS_MAX);
 	}
 	GameplayState::~GameplayState()
 	{ }
@@ -41,6 +42,14 @@ namespace Snake
 		m_loadedSprites[(int)eSprites::SNAKE_TAIL_L] = LoadTexture("./assets/gfx/snake/body/tail_left.png");
 		m_loadedSprites[(int)eSprites::SNAKE_TAIL_R] = LoadTexture("./assets/gfx/snake/body/tail_right.png");
 
+		m_loadedSounds[(int)eSounds::FRUIT] = LoadSound("./assets/sfx/snake/fruit_bite.ogg");
+		m_loadedSounds[(int)eSounds::GAMEOVER] = LoadSound("./assets/sfx/snake/gameover.ogg");
+
+		m_loadedSounds[(int)eSounds::SNAKE_UP] = LoadSound("./assets/sfx/snake/snake_up.ogg");
+		m_loadedSounds[(int)eSounds::SNAKE_DOWN] = LoadSound("./assets/sfx/snake/snake_down.ogg");
+		m_loadedSounds[(int)eSounds::SNAKE_LEFT] = LoadSound("./assets/sfx/snake/snake_left.ogg");
+		m_loadedSounds[(int)eSounds::SNAKE_RIGHT] = LoadSound("./assets/sfx/snake/snake_right.ogg");
+
 		// Initialize.
 		Init();
 	}
@@ -51,6 +60,11 @@ namespace Snake
 				UnloadTexture(tex);
 		m_loadedSprites.clear();
 		m_loadedSprites.resize((int)eSprites::SPRITES_MAX);
+		for (auto &sound : m_loadedSounds)
+			if (IsSoundReady(sound))
+				UnloadSound(sound);
+		m_loadedSounds.clear();
+		m_loadedSounds.resize((int)eSounds::SOUNDS_MAX);
 	}
 
 	void GameplayState::Init()
@@ -93,13 +107,17 @@ namespace Snake
 		if (m_gameEnd)
 			return false; // Don't update the game if it is ended.
 
-		m_snake->Move(deltaTime);
+		m_snake->Move(m_loadedSounds, deltaTime);
 		if (m_snake->EatFruit(*m_fruit.get()))
+		{
+			PlaySFX(eSounds::FRUIT);
 			m_score++;
-		if (m_snake->CheckCollBounds())
+		}
+		if (m_snake->CheckCollBounds() || m_snake->CheckCollSelf())
+		{
+			PlaySFX(eSounds::GAMEOVER);
 			m_gameEnd = true;
-		if (m_snake->CheckCollSelf())
-			m_gameEnd = true;
+		}
 
 		return true;
 	}
@@ -141,6 +159,12 @@ namespace Snake
 			}
 		}
 		EndDrawing();
+	}
+
+	void GameplayState::PlaySFX(eSounds sound)
+	{
+		if (IsSoundReady(m_loadedSounds[(int)sound]))
+			PlaySound(m_loadedSounds[(int)sound]);
 	}
 
 }
