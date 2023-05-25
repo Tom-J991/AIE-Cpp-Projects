@@ -37,7 +37,8 @@ namespace Snake
 		Vector2 m_pos;
 		Vector2 m_dir;
 		int m_length = 0;
-		const float m_speed = 0.16f;
+		const float m_speed = 0.12f;
+		bool m_justStarted = false;
 
 		int m_gridWidth;
 		int m_gridHeight;

@@ -22,10 +22,17 @@ namespace Snake
 
 	void Snake::Init()
 	{
-		m_body.clear();
 		m_pos = { 4, 8 };
 		m_dir = { 0, 0 };
-		m_length = 1;
+		m_length = 3;
+
+		m_justStarted = true;
+
+		// Init snake body.
+		m_body.clear();
+		m_body.push_back({ { m_pos.x-2, m_pos.y }, m_dir });
+		m_body.push_back({ { m_pos.x-1, m_pos.y }, m_dir });
+		m_body.push_back({ m_pos, m_dir });
 
 		g_moveTime = (float)GetTime(); // Initialize movement timer.
 	}
@@ -44,6 +51,8 @@ namespace Snake
 			else if (m_dir.x == hMove)
 				m_dir.x = (float)hMove;
 			m_dir.y = 0; // Reset
+
+			m_justStarted = false;
 		}
 		if (vMove != 0) // Set vertical direction.
 		{
@@ -52,21 +61,27 @@ namespace Snake
 				m_dir.y = (float)vMove;
 			else if (m_dir.y == vMove)
 				m_dir.y = (float)vMove;
+
+			m_justStarted = false;
 		}
 		
 		float elapsedTime = (float)GetTime() - g_moveTime;
-		if (elapsedTime > m_speed) // Move Timer
+		float tick = deltaTime / m_speed;
+		if (elapsedTime > tick) // Move Timer
 		{
-			elapsedTime -= m_speed;
-			g_moveTime += m_speed;
+			elapsedTime -= tick;
+			g_moveTime += tick;
 
 			m_pos.x += m_dir.x;
 			m_pos.y += m_dir.y;
 
 			// Adds new position to head, removes end tail. Snake movement
-			m_body.push_back({ m_pos, m_dir });
-			if (m_body.size() > m_length)
-				m_body.erase(m_body.begin());
+			if (!m_justStarted)
+			{
+				m_body.push_back({ m_pos, m_dir });
+				if (m_body.size() > m_length)
+					m_body.erase(m_body.begin());
+			}
 		}
 	}
 	void Snake::Draw(std::vector<Texture2D> &textures)

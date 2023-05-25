@@ -109,15 +109,22 @@ namespace Snake
 		ClearBackground(BLACK);
 		{
 			// Background
-			DrawRectangle(0, 0, m_gridWidth * m_cellSize, m_gridHeight * m_cellSize, DARKGREEN);
+			for (int i = 0; i < m_gridWidth; i++)
+			{
+				for (int j = 0; j < m_gridHeight; j++)
+				{
+					// Checkerboard
+					Color c = (i % 2 == 0 && j % 2 == 0 || i % 2 == 1 && j % 2 == 1) ? GetColor(0xa7d948ff) : GetColor(0x8ecc39ff);
+					DrawRectangle(i * m_cellSize, j * m_cellSize, m_cellSize, m_cellSize, c);
+				}
+			}
 			// Objects
 			m_fruit->Draw(m_loadedSprites[(int)eSprites::FRUIT]);
 			m_snake->Draw(m_loadedSprites);
 			// Score
 			std::stringstream scoreText;
 			scoreText << "Score: " << m_score;
-			const int scoreOffset = MeasureText(scoreText.str().c_str(), 28)/2;
-			DrawText(scoreText.str().c_str(), GetScreenWidth()/4+32-scoreOffset, 32, 28, WHITE);
+			DrawText(scoreText.str().c_str(), 32, 32, 28, WHITE);
 			scoreText.clear();
 			// Game End
 			if (m_gameEnd)
@@ -125,7 +132,12 @@ namespace Snake
 				DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), ColorAlpha(BLACK, 0.5f)); // Dark Tint
 				const char *endText = "Game Over!";
 				const int endOffset = MeasureText(endText, 48)/2;
-				DrawText("Game Over!", GetScreenWidth()/2-endOffset, GetScreenHeight()/2, 48, WHITE);
+				DrawText(endText, GetScreenWidth()/2-endOffset, GetScreenHeight()/2, 48, WHITE);
+
+				std::stringstream endDescText;
+				endDescText << "Press " << KeyCodeToString(g_SnakeKeys[eSnakeKeys::NEWGAME]) << " to play again!";
+				const int endDescOffset = MeasureText(endDescText.str().c_str(), 24)/2;
+				DrawText(endDescText.str().c_str(), GetScreenWidth()/2-endDescOffset, GetScreenHeight()/2+48, 24, WHITE);
 			}
 		}
 		EndDrawing();
