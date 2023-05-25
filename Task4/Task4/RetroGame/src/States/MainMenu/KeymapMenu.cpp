@@ -35,6 +35,7 @@ KeymapMenuState::KeymapMenuState()
 	m_snakeKeys.insert(std::pair<eSnakeKeys, std::string>(eSnakeKeys::MOVE_LEFT, "Move Left"));
 	m_snakeKeys.insert(std::pair<eSnakeKeys, std::string>(eSnakeKeys::MOVE_RIGHT, "Move Right"));
 	m_snakeKeys.insert(std::pair<eSnakeKeys, std::string>(eSnakeKeys::QUITGAME, "Menu"));
+	m_snakeKeys.insert(std::pair<eSnakeKeys, std::string>(eSnakeKeys::NEWGAME, "Accept"));
 }
 KeymapMenuState::~KeymapMenuState()
 {

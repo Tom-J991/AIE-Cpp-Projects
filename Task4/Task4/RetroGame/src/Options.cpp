@@ -36,6 +36,7 @@ namespace Options
 			g_SnakeKeys.insert(std::pair<eSnakeKeys, KeyboardKey>(eSnakeKeys::MOVE_RIGHT, KEY_RIGHT));
 			g_SnakeKeys.insert(std::pair<eSnakeKeys, KeyboardKey>(eSnakeKeys::MOVE_DOWN, KEY_DOWN));
 			g_SnakeKeys.insert(std::pair<eSnakeKeys, KeyboardKey>(eSnakeKeys::QUITGAME, KEY_ESCAPE));
+			g_SnakeKeys.insert(std::pair<eSnakeKeys, KeyboardKey>(eSnakeKeys::NEWGAME, KEY_ENTER));
 
 			WriteOptions();
 			return;
@@ -75,6 +76,7 @@ namespace Options
 		optionsFile.read((char*)&g_SnakeKeys[eSnakeKeys::MOVE_LEFT], sizeof(KeyboardKey));
 		optionsFile.read((char*)&g_SnakeKeys[eSnakeKeys::MOVE_RIGHT], sizeof(KeyboardKey));
 		optionsFile.read((char*)&g_SnakeKeys[eSnakeKeys::QUITGAME], sizeof(KeyboardKey));
+		optionsFile.read((char*)&g_SnakeKeys[eSnakeKeys::NEWGAME], sizeof(KeyboardKey));
 
 		optionsFile.close();
 	}
@@ -108,6 +110,7 @@ namespace Options
 		optionsFile.write((char*)&g_SnakeKeys[eSnakeKeys::MOVE_LEFT], sizeof(KeyboardKey));
 		optionsFile.write((char*)&g_SnakeKeys[eSnakeKeys::MOVE_RIGHT], sizeof(KeyboardKey));
 		optionsFile.write((char*)&g_SnakeKeys[eSnakeKeys::QUITGAME], sizeof(KeyboardKey));
+		optionsFile.write((char*)&g_SnakeKeys[eSnakeKeys::NEWGAME], sizeof(KeyboardKey));
 
 		optionsFile.close();
 	}

@@ -31,6 +31,7 @@ enum class eSnakeKeys
 	MOVE_LEFT,
 	MOVE_RIGHT,
 	QUITGAME,
+	NEWGAME,
 	KEYS_MAX
 };
 

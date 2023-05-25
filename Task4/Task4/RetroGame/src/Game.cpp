@@ -22,7 +22,12 @@ Game::Game()
 	// Initialize Settings
 	ReadOptions();
 	SetMasterVolume(g_MasterVolume);
+
 	SetWindowSize(g_ScreenWidth, g_ScreenHeight);
+	const int monitor = GetCurrentMonitor();
+	const int mWidth = GetMonitorWidth(monitor);
+	const int mHeight = GetMonitorHeight(monitor);
+	SetWindowPosition(mWidth/2 - GetScreenWidth()/2, mHeight/2 - GetScreenHeight()/2);
 
 	if (g_Fullscreen == true)
 		ToggleFullscreen();

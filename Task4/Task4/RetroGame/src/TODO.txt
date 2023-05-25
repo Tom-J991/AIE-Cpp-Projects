@@ -1,18 +1,17 @@
 TODO:
 Load assets on Loading Screen.
 	- Music
+	- SFX
 	- Sprites
 	- Etc.
 Better PONG.
+	- Highscore.
 	- Better One Player AI.
 		- Move towards prediction instead of ball.
 Implement Snake Game.
 	- Snake Menu.
-	- Proper tail logic. (Growing, following head, etc)
-	- Self collision.
-	- Boundary/Wall collision.
-	- Score & Highscore.
-	- Sprite Graphics.
+	- Smooth Grid Movement.
+	- Highscore.
 More Games.
 	- Arkanoid?
 	- Asteroids?

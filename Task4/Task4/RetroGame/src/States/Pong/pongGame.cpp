@@ -43,6 +43,8 @@ namespace Pong
 		for (int i = 0; i < (int)eSounds::SOUNDS_MAX; i++)
 			if (IsSoundReady(m_loadedSounds[i]))
 				UnloadSound(m_loadedSounds[i]);
+		m_loadedSounds.clear();
+		m_loadedSounds.resize((int)eSounds::SOUNDS_MAX);
 	}
 
 	bool GameplayState::Update(float deltaTime)
