@@ -45,6 +45,7 @@ namespace Snake
 		int vMove = IsKeyPressed(g_SnakeKeys[eSnakeKeys::MOVE_DOWN]) - IsKeyPressed(g_SnakeKeys[eSnakeKeys::MOVE_UP]);
 
 		// Move Snake
+		// TODO: Fix bug where Snake can turn into itself
 		if (hMove != 0) // Set horizontal direction.
 		{
 			if (m_dir.x == 0)
